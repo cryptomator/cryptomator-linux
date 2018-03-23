@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Cryptomator
+Comment=Cloud Storage Encryption Utility
+Exec=cryptomator.sh
+Icon=cryptomator
+Terminal=false
+Type=Application
+Categories=Utility;Security;FileTools;
