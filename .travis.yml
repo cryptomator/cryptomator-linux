@@ -4,7 +4,7 @@ if: tag IS present
 jdk:
 - oraclejdk9
 install:
-- curl -o antkit.tar.gz https://github.com/cryptomator/cryptomator/releases/download/${TRAVIS_TAG}/antkit.tar.gz
+- curl -o antkit.tar.gz -L https://github.com/cryptomator/cryptomator/releases/download/${TRAVIS_TAG}/antkit.tar.gz
 - tar -xzf antkit.tar.gz
 script:
 - build.sh
