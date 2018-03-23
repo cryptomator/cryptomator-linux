@@ -1,6 +1,10 @@
 language: java
 sudo: false
 if: tag IS present
+addons:
+  apt:
+    packages:
+    - squashfs-tools
 jdk:
 - oraclejdk9
 install:
