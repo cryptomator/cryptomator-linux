@@ -32,4 +32,5 @@ export ARCH=x86_64
 curl -L https://github.com/AppImage/AppImageKit/releases/download/10/appimagetool-x86_64.AppImage -o appimagetool.AppImage
 chmod +x appimagetool.AppImage
 ./appimagetool.AppImage --appimage-extract
-./squashfs-root/usr/bin/appimagetool Cryptomator.AppDir Cryptomator.AppImage
+export PATH=./squashfs-root/usr/bin:${PATH}
+appimagetool Cryptomator.AppDir Cryptomator.AppImage
