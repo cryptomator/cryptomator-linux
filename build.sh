@@ -18,11 +18,13 @@ ${JAVA_HOME}/bin/jlink \
 
 # build AppDir
 mkdir -p Cryptomator.AppDir/usr/bin/
+mkdir -p Cryptomator.AppDir/usr/share/icons/hicolor/512x512/apps/
 mkdir -p Cryptomator.AppDir/opt/
-cp resources/appimage/cryptomator.png Cryptomator.AppDir
+cp resources/appimage/cryptomator.png Cryptomator.AppDir/usr/share/icons/hicolor/512x512/apps/
 cp resources/appimage/cryptomator.desktop Cryptomator.AppDir
 cp -r antbuild/Cryptomator Cryptomator.AppDir/opt
 ln -s ../../opt/Cryptomator/Cryptomator Cryptomator.AppDir/usr/bin/cryptomator
+ln -s usr/share/icons/hicolor/512x512/apps/cryptomator.png Cryptomator.AppDir/cryptomator.png
 curl -L https://github.com/AppImage/AppImageKit/releases/download/10/AppRun-x86_64 -o Cryptomator.AppDir/AppRun
 chmod +x Cryptomator.AppDir/AppRun
 
