@@ -21,16 +21,17 @@ mkdir -p Cryptomator.AppDir/usr/bin/
 mkdir -p Cryptomator.AppDir/opt/
 cp resources/appimage/cryptomator.png Cryptomator.AppDir
 cp resources/appimage/cryptomator.desktop Cryptomator.AppDir
-cp resources/appimage/cryptomator.sh Cryptomator.AppDir/usr/bin/
 cp -r antbuild/Cryptomator Cryptomator.AppDir/opt
+ln -s ../../opt/Cryptomator/Cryptomator Cryptomator.AppDir/usr/bin/cryptomator
 curl -L https://github.com/AppImage/AppImageKit/releases/download/10/AppRun-x86_64 -o Cryptomator.AppDir/AppRun
 chmod +x Cryptomator.AppDir/AppRun
-chmod +x Cryptomator.AppDir/usr/bin/cryptomator.sh
 
-# build AppImage
-export ARCH=x86_64
+# get and extract appimagetool (extraction needed, as FUSE isn't present on build server)
 curl -L https://github.com/AppImage/AppImageKit/releases/download/10/appimagetool-x86_64.AppImage -o appimagetool.AppImage
 chmod +x appimagetool.AppImage
 ./appimagetool.AppImage --appimage-extract
+
+# build AppImage
+export ARCH=x86_64
 export PATH=./squashfs-root/usr/bin:${PATH}
 appimagetool Cryptomator.AppDir Cryptomator.AppImage

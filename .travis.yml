@@ -1,10 +1,14 @@
 language: java
 sudo: false
-if: tag IS present
 jdk:
 - oraclejdk9
 install:
-- curl -o antkit.tar.gz -L https://github.com/cryptomator/cryptomator/releases/download/${TRAVIS_TAG}/antkit.tar.gz
+- |
+  if [[ -n "${TRAVIS_TAG}" ]]; then
+    curl -o antkit.tar.gz -L https://github.com/cryptomator/cryptomator/releases/download/${TRAVIS_TAG}/antkit.tar.gz
+  else
+    curl -o antkit.tar.gz -L hhttps://github.com/cryptomator/cryptomator/releases/download/continuous/antkit.tar.gz
+  fi
 - tar -xzf antkit.tar.gz
 script:
 - ./build.sh
