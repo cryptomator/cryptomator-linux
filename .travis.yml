@@ -26,5 +26,5 @@ deploy:
     -H "X-Bintray-Publish:1"
     https://api.bintray.com/packages/cryptomator/cryptomator/cryptomator-linux/cryptomator-continuous-amd64.AppImage
   on:
-    repo: cryptomator/cryptomator
+    repo: cryptomator/cryptomator-linux
     condition: $TRAVIS_TAG = ''
