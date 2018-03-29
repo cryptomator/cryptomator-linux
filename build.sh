@@ -36,4 +36,4 @@ chmod +x appimagetool.AppImage
 # build AppImage
 export ARCH=x86_64
 export PATH=./squashfs-root/usr/bin:${PATH}
-appimagetool Cryptomator.AppDir Cryptomator.AppImage
+appimagetool Cryptomator.AppDir Cryptomator.AppImage -u 'bintray-zsync|cryptomator|cryptomator|cryptomator-linux|Cryptomator-_latestVersion-x86_64.AppImage.zsync'

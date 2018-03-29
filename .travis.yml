@@ -2,6 +2,10 @@ language: java
 sudo: false
 jdk:
 - oraclejdk9
+addons:
+  apt:
+    packages:
+    - zsync
 env:
   global:
     - secure: "yPh59XT99RfkcHGIQb/cJwmeLJNa88lgJLH0n0HKhkaQpD2/YCkIw95PqzFsqeTuCclibKtLgDjkSpeV0ACzI22YM3JdoOMKfI2KCbDxrdxQ+6UCCT555v0x0pe6xKFuWVI90veZjy7wYY2ylfwW85LNQAHf4dXXLV84Tk3dgP6f2btC5Q57E4B87QR6N9WwDQkN4kOrnqJrBjw1adtal1+Xh+v68HqbhBQzIuygkiNHDHrE0tVZ/MB0ScbakgvvmkZMDGzeg+vNluet1nr10mkhDivd49g4VBHCXG9mNV3ktyOC/PJjZkbJXUaWC7FFgyR5AZ+3dxB6IEIjdy2yTof7fTr/sqIB1VFDvmfRQf8mkVQ8S10dk+CBJXlbugkK3HRVCpIdkdF11567T1VEQVCdKICu89cHfyMv0tVI+8m6QJdE/xsnxi2No2938XeyLgahB0bgQ9RY8t95eRc+I4aetPc+1ommZsww0N+R7JHD/3JsDegAK2SJtggAJwD02tRveMmAVehyzeByQlM22XZX4xkY/LVgb+jbvP000JPxr8XfJXpbpn3wrLJjmbU0aMtD8L+/4+7A+UYwvDkrn3UTJ9+rIVjlsS8BsSbiyNy2wrAw+mqddos+6O5nijp4WfY/28SZpZTUp4rLksMWC5vwJEr4dWQJEeaUFy7+epg=" # BINTRAY_API_KEY
@@ -25,7 +29,14 @@ deploy:
     -H "X-Bintray-Version:continuous"
     -H "X-Bintray-Override:1"
     -H "X-Bintray-Publish:1"
-    https://api.bintray.com/content/cryptomator/cryptomator/cryptomator-continuous-amd64.AppImage
+    https://api.bintray.com/content/cryptomator/cryptomator/cryptomator-continuous-x86_64.AppImage
+    && curl -T Cryptomator.AppImage.zsync
+    -u cryptobot:${BINTRAY_API_KEY}
+    -H "X-Bintray-Package:cryptomator-linux"
+    -H "X-Bintray-Version:continuous"
+    -H "X-Bintray-Override:1"
+    -H "X-Bintray-Publish:1"
+    https://api.bintray.com/content/cryptomator/cryptomator/cryptomator-continuous-x86_64.AppImage.zsync
   on:
     repo: cryptomator/cryptomator-linux
     condition: $TRAVIS_TAG = ''
