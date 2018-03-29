@@ -26,7 +26,7 @@ cp resources/appimage/cryptomator.svg Cryptomator.AppDir/usr/share/icons/hicolor
 cp resources/appimage/cryptomator.png Cryptomator.AppDir/usr/share/icons/hicolor/512x512/apps/
 cp resources/appimage/cryptomator.desktop Cryptomator.AppDir/usr/share/applications/
 ln -s usr/share/icons/hicolor/scalable/apps/cryptomator.svg Cryptomator.AppDir/cryptomator.svg
-ln -s usr/share/applications/cryptomator.desktop cryptomator.desktop
+ln -s usr/share/applications/cryptomator.desktop Cryptomator.AppDir/cryptomator.desktop
 ln -s Cryptomator AppRun
 
 # get and extract appimagetool (extraction needed, as FUSE isn't present on build server)
