@@ -30,7 +30,9 @@ ln -s usr/share/applications/cryptomator.desktop Cryptomator.AppDir/cryptomator.
 ln -s Cryptomator Cryptomator.AppDir/AppRun
 
 # print resulting AppDir to stdout
-tar -cv Cryptomator.AppDir > /dev/null
+echo "\n\n Resulting AppDir:"
+find Cryptomator.AppDir
+echo "\n\n"
 
 # get and extract appimagetool (extraction needed, as FUSE isn't present on build server)
 curl -L https://github.com/AppImage/AppImageKit/releases/download/10/appimagetool-x86_64.AppImage -o appimagetool.AppImage
