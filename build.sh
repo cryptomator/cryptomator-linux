@@ -39,7 +39,7 @@ chmod +x appimagetool.AppImage
 export ARCH=x86_64
 export PATH=./squashfs-root/usr/bin:${PATH}
 if [[ ${BUILD_VERSION} == "continuous" ]]; then
-  appimagetool Cryptomator.AppDir cryptomator-continuous-x86_x64.AppImage -u 'bintray-zsync|cryptomator|cryptomator|cryptomator-linux|cryptomator-continuous-x86_64.AppImage.zsync'
+  appimagetool Cryptomator.AppDir cryptomator-continuous-x86_64.AppImage -u 'bintray-zsync|cryptomator|cryptomator|cryptomator-linux|cryptomator-continuous-x86_64.AppImage.zsync'
 else
-  appimagetool Cryptomator.AppDir cryptomator-${BUILD_VERSION}-x86_x64.AppImage -u 'bintray-zsync|cryptomator|cryptomator|cryptomator-linux|cryptomator-_latestVersion-x86_64.AppImage.zsync'
+  appimagetool Cryptomator.AppDir cryptomator-${BUILD_VERSION}-x86_64.AppImage -u 'bintray-zsync|cryptomator|cryptomator|cryptomator-linux|cryptomator-_latestVersion-x86_64.AppImage.zsync'
 fi
