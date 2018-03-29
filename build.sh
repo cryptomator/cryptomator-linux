@@ -19,16 +19,15 @@ ${JAVA_HOME}/bin/jlink \
   --verbose
 
 # build AppDir
-mkdir -p Cryptomator.AppDir/usr/bin/
+cp -r antbuild/Cryptomator/* Cryptomator.AppDir/
 mkdir -p Cryptomator.AppDir/usr/share/icons/hicolor/512x512/apps/
-mkdir -p Cryptomator.AppDir/opt/
+mkdir -p Cryptomator.AppDir/usr/share/applications/
+cp resources/appimage/cryptomator.svg Cryptomator.AppDir/usr/share/icons/hicolor/scalable/apps/
 cp resources/appimage/cryptomator.png Cryptomator.AppDir/usr/share/icons/hicolor/512x512/apps/
-cp resources/appimage/cryptomator.desktop Cryptomator.AppDir
-cp -r antbuild/Cryptomator Cryptomator.AppDir/opt
-ln -s ../../opt/Cryptomator/Cryptomator Cryptomator.AppDir/usr/bin/cryptomator
-ln -s usr/share/icons/hicolor/512x512/apps/cryptomator.png Cryptomator.AppDir/cryptomator.png
-curl -L https://github.com/AppImage/AppImageKit/releases/download/10/AppRun-x86_64 -o Cryptomator.AppDir/AppRun
-chmod +x Cryptomator.AppDir/AppRun
+cp resources/appimage/cryptomator.desktop Cryptomator.AppDir/usr/share/applications/
+ln -s usr/share/icons/hicolor/scalable/apps/cryptomator.svg Cryptomator.AppDir/cryptomator.svg
+ln -s usr/share/applications/cryptomator.desktop cryptomator.desktop
+ln -s Cryptomator AppRun
 
 # get and extract appimagetool (extraction needed, as FUSE isn't present on build server)
 curl -L https://github.com/AppImage/AppImageKit/releases/download/10/appimagetool-x86_64.AppImage -o appimagetool.AppImage
