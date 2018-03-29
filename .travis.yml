@@ -18,19 +18,24 @@ install:
   fi
 - tar -xzf antkit.tar.gz
 script:
-- ./build.sh
+- |
+  if [[ -n "${TRAVIS_TAG}" ]]; then
+    ./build.sh ${TRAVIS_TAG}
+  else
+    ./build.sh continuous
+  fi
 deploy:
 - provider: script
   skip_cleanup: true
   script: >-
-    curl -T Cryptomator.AppImage
+    curl -T cryptomator-continuous-x86_64.AppImage
     -u cryptobot:${BINTRAY_API_KEY}
     -H "X-Bintray-Package:cryptomator-linux"
     -H "X-Bintray-Version:continuous"
     -H "X-Bintray-Override:1"
     -H "X-Bintray-Publish:1"
     https://api.bintray.com/content/cryptomator/cryptomator/cryptomator-continuous-x86_64.AppImage
-    && curl -T Cryptomator.AppImage.zsync
+    && curl -T cryptomator-continuous-x86_64.AppImage.zsync
     -u cryptobot:${BINTRAY_API_KEY}
     -H "X-Bintray-Package:cryptomator-linux"
     -H "X-Bintray-Version:continuous"
