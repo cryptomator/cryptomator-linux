@@ -2,6 +2,11 @@
 BUILD_VERSION=$1
 
 # build application directory
+export antbuild.logback.configurationFile=logback.xml
+export antbuild.cryptomator.settingsPath=~/.Cryptomator/settings.json
+export antbuild.cryptomator.ipcPortPath=~/.Cryptomator/ipcPort.bin
+export antbuild.cryptomator.keychainPath=
+export antbuild.dropinResourcesRoot=
 ant image
 
 # replace jvm
@@ -22,6 +27,7 @@ mkdir -p Cryptomator.AppDir/usr/share/icons/hicolor/512x512/apps/
 mkdir -p Cryptomator.AppDir/usr/share/icons/hicolor/scalable/apps/
 mkdir -p Cryptomator.AppDir/usr/share/applications/
 cp -r antbuild/Cryptomator/* Cryptomator.AppDir/
+cp resources/appimage/logback.xml Cryptomator.AppDir/app/
 cp resources/appimage/cryptomator.svg Cryptomator.AppDir/usr/share/icons/hicolor/scalable/apps/
 cp resources/appimage/cryptomator.png Cryptomator.AppDir/usr/share/icons/hicolor/512x512/apps/
 cp resources/appimage/cryptomator.desktop Cryptomator.AppDir/usr/share/applications/
@@ -30,9 +36,9 @@ ln -s usr/share/applications/cryptomator.desktop Cryptomator.AppDir/cryptomator.
 ln -s Cryptomator Cryptomator.AppDir/AppRun
 
 # print resulting AppDir to stdout
-echo "\n\n Resulting AppDir:"
+echo "Resulting AppDir:"
 find Cryptomator.AppDir
-echo "\n\n"
+echo "--------"
 
 # get and extract appimagetool (extraction needed, as FUSE isn't present on build server)
 curl -L https://github.com/AppImage/AppImageKit/releases/download/10/appimagetool-x86_64.AppImage -o appimagetool.AppImage
