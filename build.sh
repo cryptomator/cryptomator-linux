@@ -2,12 +2,13 @@
 BUILD_VERSION=$1
 
 # build application directory
-export antbuild.logback.configurationFile=logback.xml
-export antbuild.cryptomator.settingsPath=~/.Cryptomator/settings.json
-export antbuild.cryptomator.ipcPortPath=~/.Cryptomator/ipcPort.bin
-export antbuild.cryptomator.keychainPath=
-export antbuild.dropinResourcesRoot=
-ant image
+ant \
+  -Dantbuild.logback.configurationFile=logback.xml \
+  -Dantbuild.cryptomator.settingsPath=~/.Cryptomator/settings.json \
+  -Dantbuild.cryptomator.ipcPortPath=~/.Cryptomator/ipcPort.bin \
+  -Dantbuild.cryptomator.keychainPath= \
+  -Dantbuild.dropinResourcesRoot= \
+  image
 
 # replace jvm
 rm -rf antbuild/Cryptomator/runtime
