@@ -8,11 +8,11 @@ env:
 install:
 - |
   if [[ -n "${TRAVIS_TAG}" ]]; then
-    curl -o antkit.tar.gz -L https://github.com/cryptomator/cryptomator/releases/download/${TRAVIS_TAG}/antkit.tar.gz
+    curl -o antkit.zip -L https://github.com/cryptomator/cryptomator/releases/download/${TRAVIS_TAG}/antkit.zip
   else
-    curl -o antkit.tar.gz -L https://github.com/cryptomator/cryptomator/releases/download/continuous/antkit.tar.gz
+    curl -o antkit.zip -L https://github.com/cryptomator/cryptomator/releases/download/continuous/antkit.zip
   fi
-- tar -xzf antkit.tar.gz
+- unzip antkit.zip
 script:
 - |
   if [[ -n "${TRAVIS_TAG}" ]]; then
