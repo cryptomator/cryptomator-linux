@@ -20,7 +20,7 @@ ${JAVA_HOME}/bin/jlink \
   --no-man-pages \
   --strip-native-commands \
   --output antbuild/Cryptomator/runtime \
-  --add-modules java.base,java.logging,java.xml,java.sql,java.management,java.security.sasl,java.naming,java.datatransfer,java.security.jgss,java.rmi,java.scripting,java.prefs,java.desktop,jdk.incubator.httpclient,javafx.fxml,javafx.controls,jdk.incubator.httpclient \
+  --add-modules java.base,java.logging,java.xml,java.sql,java.management,java.security.sasl,java.naming,java.datatransfer,java.security.jgss,java.rmi,java.scripting,java.prefs,java.desktop,javafx.fxml,javafx.controls \
   --verbose
 
 # build AppDir
