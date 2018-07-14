@@ -1,5 +1,10 @@
 #!/bin/bash
-BUILD_VERSION=$1
+BUILD_VERSION=${1:-continuous}
+echo "Building Cryptomator ${BUILD_VERSION}"
+
+# download ant-kit
+curl -o antkit.zip -L https://github.com/cryptomator/cryptomator/releases/download/${BUILD_VERSION}/antkit.zip
+unzip antkit.zip
 
 # build application directory
 ant \
