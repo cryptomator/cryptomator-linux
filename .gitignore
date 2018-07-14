@@ -1,0 +1,9 @@
+/libs/
+/Cryptomator.AppDir/
+/squashfs-root/
+/antbuild/
+
+antkit.zip
+build.xml
+appimagetool.AppImage
+cryptomator-*
