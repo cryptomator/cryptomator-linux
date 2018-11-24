@@ -6,3 +6,4 @@ Icon=cryptomator
 Terminal=false
 Type=Application
 Categories=Utility;Security;FileTools;
+StartupWMClass=org.cryptomator.launcher.MainApplication
