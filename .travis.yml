@@ -1,18 +1,18 @@
 language: java
 sudo: false
 jdk:
-- oraclejdk9
+- openjdk11
 env:
   global:
     - secure: "sc3DIqa9jvrSGUe2/y3AL2B1R+vGCVnoF+ynWrVdESr7SIQRHmTj1yd4QIZg2kCyvqJKyaRKvItZ/fJwDfuBWDe+/DgdxCWmjdCmLuoBaAFp6fc4TVCmcr+vp3eWOmgOanAyT/xb4+WjO33OiKTzKa25eGLueU4Oj+1ER4hw+LWtEKj6/57Ib6fPc6X+9TStZz9JGlWtuQLUYR37H6KBNGFpsLvpOrPAts/Ul5VGjKcf9Vz8Xo06YtsbCQpIXZdvPud7BistK8O5SityuEE6RDcCBhrShe4ohaLJLmnja40ZmOvgEH8dF5nBlA9c+lfyNuk0k47fT07Bady/qe0fna0WvUtFi/Q04LDU04uAeSwm6TyM7et6bwh7WcnY0PDD6alBkizTaeL0hTtfJ5nPXlR/4f9UvLidmwIqlNlm+BL8oQO2Mm1Yfz5KH8HzLlHjHYqaU0MRvkzfd+/mW2G1ZQ84WpqacWL58jooUHdDupQQ4UD9U4BGaBfauRKmTJ9jbGEnOqrSybenHLfJph+iVfvGCbD9N2gk+y/GNbzsGLZkitBPL3GEOSUP/gH63Ex7WyejP9eaQFjrAlvluqULeZWRHNHipThX+pD5+zzSh2zroO8Z7Hy3iF2FctCCCdpDcC++nfjgW0DQuHldF9fZABYsaNy5ZX2jduX/Ch5sBI4=" # BINTRAY_API_KEY
 install:
 - |
   if [[ -n "${TRAVIS_TAG}" ]]; then
-    curl -o antkit.zip -L https://dl.bintray.com/cryptomator/cryptomator/antkit-${TRAVIS_TAG}.zip
+    curl -o buildkit.zip -L https://dl.bintray.com/cryptomator/cryptomator/buildkit-${TRAVIS_TAG}.zip
   else
-    curl -o antkit.zip -L https://dl.bintray.com/cryptomator/cryptomator/antkit-continuous.zip
+    curl -o buildkit.zip -L https://dl.bintray.com/cryptomator/cryptomator/buildkit-continuous.zip
   fi
-- unzip antkit.zip
+- unzip buildkit.zip
 script:
 - |
   if [[ -n "${TRAVIS_TAG}" ]]; then
