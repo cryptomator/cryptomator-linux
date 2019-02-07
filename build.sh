@@ -38,6 +38,7 @@ cp resources/appimage/cryptomator.png Cryptomator.AppDir/usr/share/icons/hicolor
 cp resources/appimage/cryptomator.desktop Cryptomator.AppDir/usr/share/applications/
 cp resources/appimage/cryptomator.appdata.xml Cryptomator.AppDir/usr/share/metainfo/
 ln -s usr/share/icons/hicolor/scalable/apps/cryptomator.svg Cryptomator.AppDir/cryptomator.svg
+ln -s usr/share/icons/hicolor/scalable/apps/cryptomator.svg Cryptomator.AppDir/.DirIcon
 ln -s usr/share/applications/cryptomator.desktop Cryptomator.AppDir/cryptomator.desktop
 ln -s Cryptomator Cryptomator.AppDir/AppRun
 
