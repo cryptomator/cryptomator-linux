@@ -35,8 +35,7 @@ jobs:
           else
             curl -o appdir.tar.gz -L https://dl.bintray.com/cryptomator/cryptomator/snapshot/appdir.tar.gz
           fi
-        - tar -C Cryptomator.AppDir -xzf appdir.tar.gz
-        - ls -R Cryptomator.AppDir
+        - tar -xzvf appdir.tar.gz;
       script: 
         - ./appimage-build.sh
       deploy:

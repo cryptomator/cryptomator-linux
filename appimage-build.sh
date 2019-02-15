@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # check preconditions
-if [ ! -d ./Cryptomator.AppDir ]; then echo "./Cryptomator.AppDir does not exist."; exit 1; fi
+if [ ! -d ./Cryptomator ]; then echo "./Cryptomator does not exist."; exit 1; fi
 if [ ! -x ./tools/appimagekit/appimagetool-x86_64.AppImage ]; then echo "./tools/appimagekit/appimagetool-x86_64.AppImage not executable."; exit 1; fi
 
 # build AppDir
+mv Cryptomator Cryptomator.AppDir
 mkdir -p Cryptomator.AppDir/usr/share/icons/hicolor/512x512/apps/
 mkdir -p Cryptomator.AppDir/usr/share/icons/hicolor/scalable/apps/
 mkdir -p Cryptomator.AppDir/usr/share/applications/
-cp -r app/Cryptomator/* Cryptomator.AppDir/
 cp resources/appimage/logback.xml Cryptomator.AppDir/app/
 cp resources/appimage/cryptomator.svg Cryptomator.AppDir/usr/share/icons/hicolor/scalable/apps/
 cp resources/appimage/cryptomator.png Cryptomator.AppDir/usr/share/icons/hicolor/512x512/apps/

@@ -28,4 +28,4 @@ BUILD_VERSION=`cat libs/version.txt`
     --strip-native-commands
 
 # archive app dir
-tar -czvf appdir.tar.gz app/*
+tar -C app -czf appdir.tar.gz Cryptomator
