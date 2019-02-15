@@ -5,57 +5,47 @@ jdk:
 env:
   global:
     - secure: "sc3DIqa9jvrSGUe2/y3AL2B1R+vGCVnoF+ynWrVdESr7SIQRHmTj1yd4QIZg2kCyvqJKyaRKvItZ/fJwDfuBWDe+/DgdxCWmjdCmLuoBaAFp6fc4TVCmcr+vp3eWOmgOanAyT/xb4+WjO33OiKTzKa25eGLueU4Oj+1ER4hw+LWtEKj6/57Ib6fPc6X+9TStZz9JGlWtuQLUYR37H6KBNGFpsLvpOrPAts/Ul5VGjKcf9Vz8Xo06YtsbCQpIXZdvPud7BistK8O5SityuEE6RDcCBhrShe4ohaLJLmnja40ZmOvgEH8dF5nBlA9c+lfyNuk0k47fT07Bady/qe0fna0WvUtFi/Q04LDU04uAeSwm6TyM7et6bwh7WcnY0PDD6alBkizTaeL0hTtfJ5nPXlR/4f9UvLidmwIqlNlm+BL8oQO2Mm1Yfz5KH8HzLlHjHYqaU0MRvkzfd+/mW2G1ZQ84WpqacWL58jooUHdDupQQ4UD9U4BGaBfauRKmTJ9jbGEnOqrSybenHLfJph+iVfvGCbD9N2gk+y/GNbzsGLZkitBPL3GEOSUP/gH63Ex7WyejP9eaQFjrAlvluqULeZWRHNHipThX+pD5+zzSh2zroO8Z7Hy3iF2FctCCCdpDcC++nfjgW0DQuHldF9fZABYsaNy5ZX2jduX/Ch5sBI4=" # BINTRAY_API_KEY
-install:
-- |
-  if [[ -n "${TRAVIS_TAG}" ]]; then
-    curl -o buildkit.zip -L https://dl.bintray.com/cryptomator/cryptomator/buildkit-${TRAVIS_TAG}.zip
-  else
-    curl -o buildkit.zip -L https://dl.bintray.com/cryptomator/cryptomator/buildkit-continuous.zip
-  fi
-- unzip buildkit.zip
-script:
-- |
-  if [[ -n "${TRAVIS_TAG}" ]]; then
-    ./build.sh ${TRAVIS_TAG}
-  else
-    ./build.sh continuous
-  fi
-deploy:
-- provider: script
-  skip_cleanup: true
-  script: >-
-    curl -T cryptomator-continuous-x86_64.AppImage
-    -u cryptobot:${BINTRAY_API_KEY}
-    -H "X-Bintray-Package:cryptomator-linux"
-    -H "X-Bintray-Version:continuous"
-    -H "X-Bintray-Override:1"
-    -H "X-Bintray-Publish:1"
-    https://api.bintray.com/content/cryptomator/cryptomator/cryptomator-continuous-x86_64.AppImage
-    && curl -T cryptomator-continuous-x86_64.AppImage.zsync
-    -u cryptobot:${BINTRAY_API_KEY}
-    -H "X-Bintray-Package:cryptomator-linux"
-    -H "X-Bintray-Version:continuous"
-    -H "X-Bintray-Override:1"
-    -H "X-Bintray-Publish:1"
-    https://api.bintray.com/content/cryptomator/cryptomator/cryptomator-continuous-x86_64.AppImage.zsync
-  on:
-    repo: cryptomator/cryptomator-linux
-    condition: $TRAVIS_TAG = ''
-- provider: script
-  skip_cleanup: true
-  script: >-
-    curl -T cryptomator-${TRAVIS_TAG}-x86_64.AppImage
-    -u cryptobot:${BINTRAY_API_KEY}
-    -H "X-Bintray-Package:cryptomator-linux"
-    -H "X-Bintray-Version:${TRAVIS_TAG}"
-    -H "X-Bintray-Publish:1"
-    https://api.bintray.com/content/cryptomator/cryptomator/cryptomator-${TRAVIS_TAG}-x86_64.AppImage
-    && curl -T cryptomator-${TRAVIS_TAG}-x86_64.AppImage.zsync
-    -u cryptobot:${BINTRAY_API_KEY}
-    -H "X-Bintray-Package:cryptomator-linux"
-    -H "X-Bintray-Version:${TRAVIS_TAG}"
-    -H "X-Bintray-Publish:1"
-    https://api.bintray.com/content/cryptomator/cryptomator/cryptomator-${TRAVIS_TAG}-x86_64.AppImage.zsync
-  on:
-    repo: cryptomator/cryptomator-linux
-    tags: true
+jobs:  
+  include:
+    - stage: "Build application directory"
+      before_script:
+        - |
+          if [[ -n "${TRAVIS_TAG}" ]]; then
+            curl -o buildkit.zip -L https://dl.bintray.com/cryptomator/cryptomator/snapshot/buildkit-linux.zip
+          else
+            curl -o buildkit.zip -L https://dl.bintray.com/cryptomator/cryptomator/${TRAVIS_TAG}/buildkit-linux.zip
+          fi
+        - unzip buildkit.zip
+      script: 
+        - ./appdir-build.sh
+      deploy:
+      - provider: bintray
+        file: appdir-deploy-snapshot.json
+        user: cryptobot
+        key: $BINTRAY_API_KEY
+        skip_cleanup: true
+        on:
+          repo: cryptomator/cryptomator-linux
+          all_branches: true
+    - stage: "Package as AppImage"
+      before_script:
+        - |
+          if [[ -n "${TRAVIS_TAG}" ]]; then
+            curl -o appdir.tar.gz -L https://dl.bintray.com/cryptomator/cryptomator/snapshot/appdir.tar.gz
+          else
+            curl -o appdir.tar.gz -L https://dl.bintray.com/cryptomator/cryptomator/${TRAVIS_TAG}/appdir.tar.gz
+          fi
+        - tar -C Cryptomator.AppDir -xzf appdir.tar.gz
+        - ls -R Cryptomator.AppDir
+      script: 
+        - ./appimage-build.sh
+      deploy:
+      - provider: bintray
+        file: TODO.json
+        user: cryptobot
+        key: $BINTRAY_API_KEY
+        skip_cleanup: true
+        on:
+          repo: cryptomator/cryptomator-linux
+          all_branches: true
+          tags: true
