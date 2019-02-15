@@ -2,7 +2,7 @@
 
 # check preconditions
 if [ ! -d ./Cryptomator ]; then echo "./Cryptomator does not exist."; exit 1; fi
-if [ ! -x ./tools/appimagekit/appimagetool-x86_64.AppImage ]; then echo "./tools/appimagekit/appimagetool-x86_64.AppImage not executable."; exit 1; fi
+if [ ! -x ./tools/appimagekit/squashfs-root/AppRun ]; then echo "./tools/appimagekit/squashfs-root/AppRun not executable."; exit 1; fi
 
 # build AppDir
 mv Cryptomator Cryptomator.AppDir
@@ -18,9 +18,6 @@ ln -s usr/share/icons/hicolor/scalable/apps/cryptomator.svg Cryptomator.AppDir/c
 ln -s usr/share/icons/hicolor/scalable/apps/cryptomator.svg Cryptomator.AppDir/.DirIcon
 ln -s usr/share/applications/cryptomator.desktop Cryptomator.AppDir/cryptomator.desktop
 ln -s Cryptomator Cryptomator.AppDir/AppRun
-
-# extract appimagetool (extraction needed, as FUSE isn't present/allowed on build server)
-(cd ./tools/appimagekit && ./appimagetool-x86_64.AppImage --appimage-extract)
 
 # build AppImage
 export ARCH=x86_64

@@ -1,0 +1,15 @@
+{
+  "package": {
+	"name": "cryptomator-linux",
+	"repo": "cryptomator",
+	"subject": "cryptomator"
+  },
+  "version": {
+	"name": "snapshot"
+  },
+  "files":
+  [
+	{"includePattern": "Cryptomator-(.*)-x86_64.AppImage", "uploadPattern": "snapshot/Cryptomator-SNAPSHOT-x86_64.AppImage"}
+  ],
+  "publish": true
+}
