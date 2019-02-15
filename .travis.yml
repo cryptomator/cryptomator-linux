@@ -11,9 +11,9 @@ jobs:
       before_script:
         - |
           if [[ -n "${TRAVIS_TAG}" ]]; then
-            curl -o buildkit.zip -L https://dl.bintray.com/cryptomator/cryptomator/snapshot/buildkit-linux.zip
-          else
             curl -o buildkit.zip -L https://dl.bintray.com/cryptomator/cryptomator/${TRAVIS_TAG}/buildkit-linux.zip
+          else
+            curl -o buildkit.zip -L https://dl.bintray.com/cryptomator/cryptomator/snapshot/buildkit-linux.zip
           fi
         - unzip buildkit.zip
       script: 
@@ -31,9 +31,9 @@ jobs:
       before_script:
         - |
           if [[ -n "${TRAVIS_TAG}" ]]; then
-            curl -o appdir.tar.gz -L https://dl.bintray.com/cryptomator/cryptomator/snapshot/appdir.tar.gz
-          else
             curl -o appdir.tar.gz -L https://dl.bintray.com/cryptomator/cryptomator/${TRAVIS_TAG}/appdir.tar.gz
+          else
+            curl -o appdir.tar.gz -L https://dl.bintray.com/cryptomator/cryptomator/snapshot/appdir.tar.gz
           fi
         - tar -C Cryptomator.AppDir -xzf appdir.tar.gz
         - ls -R Cryptomator.AppDir
