@@ -31,7 +31,7 @@ jobs:
       install:
         - curl -L https://github.com/AppImage/AppImageKit/releases/download/10/appimagetool-x86_64.AppImage -o ./tools/appimagekit/appimagetool.AppImage
         - chmod +x ./tools/appimagekit/appimagetool.AppImage
-        - ./tools/appimagekit/appimagetool.AppImage --appimage-extract
+        - (cd ./tools/appimagekit && ./appimagetool.AppImage --appimage-extract)
       before_script:
         - |
           if [[ -n "${TRAVIS_TAG}" ]]; then

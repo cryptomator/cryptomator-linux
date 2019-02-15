@@ -3,7 +3,7 @@ BUILD_VERSION=${1:-SNAPSHOT}
 
 # check preconditions
 if [ ! -d ./Cryptomator ]; then echo "./Cryptomator does not exist."; exit 1; fi
-if [ ! -x $(realpath ./tools/appimagekit/squashfs-root/AppRun) ]; then echo "./tools/appimagekit/squashfs-root/AppRun not executable."; exit 1; fi
+if [ ! -x $(readlink -e ./tools/appimagekit/squashfs-root/AppRun) ]; then echo "./tools/appimagekit/squashfs-root/AppRun not executable."; exit 1; fi
 
 # prepare AppDir
 mv Cryptomator Cryptomator.AppDir
