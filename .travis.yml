@@ -41,7 +41,7 @@ jobs:
           fi
         - tar -xzvf appdir.tar.gz;
       script: 
-        - ./appimage-build.sh
+        - ./appimage-build.sh ${TRAVIS_TAG}
       deploy:
       - provider: bintray
         file: appimage-deploy-snapshot.json

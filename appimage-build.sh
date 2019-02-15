@@ -1,10 +1,11 @@
 #!/bin/bash
+BUILD_VERSION=${1:-SNAPSHOT}
 
 # check preconditions
 if [ ! -d ./Cryptomator ]; then echo "./Cryptomator does not exist."; exit 1; fi
-if [ ! -x ./tools/appimagekit/squashfs-root/AppRun ]; then echo "./tools/appimagekit/squashfs-root/AppRun not executable."; exit 1; fi
+if [ ! -x $(realpath ./tools/appimagekit/squashfs-root/AppRun) ]; then echo "./tools/appimagekit/squashfs-root/AppRun not executable."; exit 1; fi
 
-# build AppDir
+# prepare AppDir
 mv Cryptomator Cryptomator.AppDir
 mkdir -p Cryptomator.AppDir/usr/share/icons/hicolor/512x512/apps/
 mkdir -p Cryptomator.AppDir/usr/share/icons/hicolor/scalable/apps/
@@ -21,8 +22,8 @@ ln -s Cryptomator Cryptomator.AppDir/AppRun
 
 # build AppImage
 export ARCH=x86_64
-if [[ ${BUILD_VERSION} == "continuous" ]]; then
-  ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-continuous-x86_64.AppImage -u 'bintray-zsync|cryptomator|cryptomator|cryptomator-linux|cryptomator-continuous-x86_64.AppImage.zsync'
+if [[ ${BUILD_VERSION} == "SNAPSHOT" ]]; then
+  ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-SNAPSHOT-x86_64.AppImage -u 'bintray-zsync|cryptomator|cryptomator|cryptomator-linux|cryptomator-SNAPSHOT-x86_64.AppImage.zsync'
 else
   ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-${BUILD_VERSION}-x86_64.AppImage -u 'bintray-zsync|cryptomator|cryptomator|cryptomator-linux|cryptomator-_latestVersion-x86_64.AppImage.zsync'
 fi

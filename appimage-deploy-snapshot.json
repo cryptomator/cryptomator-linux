@@ -9,7 +9,8 @@
   },
   "files":
   [
-	{"includePattern": "Cryptomator-(.*)-x86_64.AppImage", "uploadPattern": "snapshot/Cryptomator-SNAPSHOT-x86_64.AppImage"}
+	{"includePattern": "cryptomator-SNAPSHOT-x86_64.AppImage", "uploadPattern": "snapshot/Cryptomator-SNAPSHOT-x86_64.AppImage"},
+	{"includePattern": "cryptomator-SNAPSHOT-x86_64.AppImage.zsync", "uploadPattern": "snapshot/Cryptomator-SNAPSHOT-x86_64.AppImage.zsync"}
   ],
   "publish": true
 }
