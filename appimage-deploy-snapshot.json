@@ -9,8 +9,8 @@
   },
   "files":
   [
-	{"includePattern": "cryptomator-SNAPSHOT-x86_64.AppImage", "uploadPattern": "snapshot/Cryptomator-SNAPSHOT-x86_64.AppImage"},
-	{"includePattern": "cryptomator-SNAPSHOT-x86_64.AppImage.zsync", "uploadPattern": "snapshot/Cryptomator-SNAPSHOT-x86_64.AppImage.zsync"}
+	{"includePattern": "cryptomator-SNAPSHOT-x86_64.AppImage", "uploadPattern": "snapshot/Cryptomator-SNAPSHOT-x86_64.AppImage", "matrixParams": {"override": 1}},
+	{"includePattern": "cryptomator-SNAPSHOT-x86_64.AppImage.zsync", "uploadPattern": "snapshot/Cryptomator-SNAPSHOT-x86_64.AppImage.zsync", "matrixParams": {"override": 1}}
   ],
   "publish": true
 }
