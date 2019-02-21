@@ -13,9 +13,10 @@ BUILD_VERSION=`cat libs/version.txt`
     --input libs \
     --main-jar launcher-${BUILD_VERSION}.jar  \
     --class org.cryptomator.launcher.Cryptomator \
-    --jvm-args "-Dlogback.configurationFile=\"logback.xml\"" \
-    --jvm-args "-Dcryptomator.settingsPath=\"~/.Cryptomator/settings.json\"" \
-    --jvm-args "-Dcryptomator.ipcPortPath=\"~/.Cryptomator/ipcPort.bin\"" \
+    --jvm-args "-Dcryptomator.logDir=\".local/share/Cryptomator/logs\"" \
+    --jvm-args "-Dcryptomator.settingsPath=\"~/.config/Cryptomator/settings.json:~/.Cryptomator/settings.json\"" \
+    --jvm-args "-Dcryptomator.ipcPortPath=\"~/.config/Cryptomator/ipcPort.bin:~/.Cryptomator/ipcPort.bin\"" \
+    --jvm-args "-Dcryptomator.mountPointsDir=\"~/.local/share/Cryptomator/mnt\"" \
     --jvm-args "-Xss2m" \
     --jvm-args "-Xmx512m" \
     --output app \
