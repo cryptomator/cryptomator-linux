@@ -11,7 +11,6 @@ mkdir -p Cryptomator.AppDir/usr/share/icons/hicolor/512x512/apps/
 mkdir -p Cryptomator.AppDir/usr/share/icons/hicolor/scalable/apps/
 mkdir -p Cryptomator.AppDir/usr/share/applications/
 mkdir -p Cryptomator.AppDir/usr/share/metainfo/
-cp resources/appimage/logback.xml Cryptomator.AppDir/app/
 cp resources/appimage/cryptomator.svg Cryptomator.AppDir/usr/share/icons/hicolor/scalable/apps/
 cp resources/appimage/cryptomator.png Cryptomator.AppDir/usr/share/icons/hicolor/512x512/apps/
 cp resources/appimage/cryptomator.desktop Cryptomator.AppDir/usr/share/applications/
