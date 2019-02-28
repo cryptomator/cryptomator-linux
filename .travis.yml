@@ -18,6 +18,8 @@ jobs:
         - unzip buildkit.zip
       script: 
         - ./appdir-build.sh
+      before_deploy:
+        - export TODAY=`date +'%Y-%m-%d'`; envsubst '$TRAVIS_TAG $TODAY' < appdir-deploy-release.tmpl.json > appdir-deploy-release.json
       deploy:
       - provider: bintray
         file: appdir-deploy-snapshot.json
@@ -27,6 +29,14 @@ jobs:
         on:
           repo: cryptomator/cryptomator-linux
           all_branches: true
+      - provider: bintray
+        file: appdir-deploy-release.json
+        user: cryptobot
+        key: $BINTRAY_API_KEY
+        skip_cleanup: true
+        on:
+          repo: cryptomator/cryptomator-linux
+          tags: true
     - stage: "Package as AppImage"
       install:
         - curl -L https://github.com/AppImage/AppImageKit/releases/download/10/appimagetool-x86_64.AppImage -o ./tools/appimagekit/appimagetool.AppImage
@@ -42,6 +52,8 @@ jobs:
         - tar -xzvf appdir.tar.gz;
       script: 
         - ./appimage-build.sh ${TRAVIS_TAG}
+      before_deploy:
+        - export TODAY=`date +'%Y-%m-%d'`; envsubst '$TRAVIS_TAG $TODAY' < appimage-deploy-release.tmpl.json > appimage-deploy-release.json
       deploy:
       - provider: bintray
         file: appimage-deploy-snapshot.json
@@ -51,3 +63,11 @@ jobs:
         on:
           repo: cryptomator/cryptomator-linux
           all_branches: true
+      - provider: bintray
+        file: appimage-deploy-release.json
+        user: cryptobot
+        key: $BINTRAY_API_KEY
+        skip_cleanup: true
+        on:
+          repo: cryptomator/cryptomator-linux
+          tags: true

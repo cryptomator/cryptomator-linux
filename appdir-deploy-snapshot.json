@@ -1,15 +1,14 @@
 {
   "package": {
-	"name": "cryptomator-linux",
-	"repo": "cryptomator",
-	"subject": "cryptomator"
+  	"name": "cryptomator-linux",
+  	"repo": "cryptomator",
+  	"subject": "cryptomator"
   },
   "version": {
-	"name": "snapshot"
+  	"name": "snapshot"
   },
-  "files":
-  [
-	{"includePattern": "appdir.tar.gz", "uploadPattern": "snapshot/appdir.tar.gz", "matrixParams": {"override": 1}}
+  "files": [
+  	{"includePattern": "appdir.tar.gz", "uploadPattern": "/snapshot/appdir.tar.gz", "matrixParams": {"override": 1}}
   ],
   "publish": true
 }
