@@ -29,6 +29,7 @@ jobs:
         on:
           repo: cryptomator/cryptomator-linux
           all_branches: true
+          tags: false
       - provider: bintray
         file: appdir-deploy-release.json
         user: cryptobot
@@ -63,6 +64,7 @@ jobs:
         on:
           repo: cryptomator/cryptomator-linux
           all_branches: true
+          tags: false
       - provider: bintray
         file: appimage-deploy-release.json
         user: cryptobot
