@@ -19,6 +19,7 @@ BUILD_VERSION=`cat libs/version.txt`
     --jvm-args "-Dcryptomator.mountPointsDir=\"~/.local/share/Cryptomator/mnt\"" \
     --jvm-args "-Xss2m" \
     --jvm-args "-Xmx512m" \
+    --jvm-args "-Djdk.gtk.version=2" \
     --output app \
     --force \
     --identifier org.cryptomator \
