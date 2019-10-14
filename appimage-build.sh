@@ -17,7 +17,7 @@ cp resources/appimage/org.cryptomator.cryptomator.desktop Cryptomator.AppDir/usr
 cp resources/appimage/cryptomator.appdata.xml Cryptomator.AppDir/usr/share/metainfo/
 ln -s usr/share/icons/hicolor/scalable/apps/cryptomator.svg Cryptomator.AppDir/cryptomator.svg
 ln -s usr/share/icons/hicolor/scalable/apps/cryptomator.svg Cryptomator.AppDir/.DirIcon
-ln -s usr/share/applications/cryptomator.desktop Cryptomator.AppDir/org.cryptomator.cryptomator.desktop
+ln -s usr/share/applications/org.cryptomator.cryptomator.desktop Cryptomator.AppDir/org.cryptomator.cryptomator.desktop
 ln -s Cryptomator Cryptomator.AppDir/AppRun
 
 # build AppImage
