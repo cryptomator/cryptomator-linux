@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2018 Armin Schrenk <armin.schrenk@zoho.eu> -->
 <component type="desktop-application">
-  <id>org.cryptomator.cryptomator</id>
+  <id>org.cryptomator.Cryptomator</id>
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <name>Cryptomator</name>
@@ -69,5 +69,5 @@
   <provides>
     <binary>cryptomator</binary>
   </provides>
-  <launchable type="desktop-id">org.cryptomator.cryptomator.desktop</launchable>
+  <launchable type="desktop-id">org.cryptomator.Cryptomator.desktop</launchable>
 </component>
