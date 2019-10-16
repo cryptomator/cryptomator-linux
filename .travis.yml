@@ -1,5 +1,4 @@
 dist: xenial
-language: java
 sudo: false
 env:
   global:
@@ -7,8 +6,8 @@ env:
 jobs:  
   include:
     - stage: "Build application directory"
-      jdk:
-      - openjdk11
+      language: java
+      jdk: openjdk11
       before_script:
         - |
           if [[ -n "${TRAVIS_TAG}" ]]; then

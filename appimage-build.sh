@@ -9,7 +9,8 @@ if [ ! -x $(readlink -e ./tools/appimagekit/squashfs-root/AppRun) ]; then echo "
 mv Cryptomator Cryptomator.AppDir
 cp -r resources/appimage/AppDir/* Cryptomator.AppDir/
 ln -s usr/share/icons/hicolor/scalable/apps/org.cryptomator.Cryptomator.svg Cryptomator.AppDir/cryptomator.svg
-ln -s usr/share/icons/hicolor/scalable/apps/org.cryptomator.Cryptomator.svg Cryptomator.AppDir/.DirIcon
+ln -s usr/share/icons/hicolor/256x256/apps/org.cryptomator.Cryptomator.png Cryptomator.AppDir/cryptomator.png
+ln -s usr/share/icons/hicolor/256x256/apps/org.cryptomator.Cryptomator.png Cryptomator.AppDir/.DirIcon
 ln -s usr/share/applications/org.cryptomator.Cryptomator.desktop Cryptomator.AppDir/org.cryptomator.Cryptomator.desktop
 ln -s Cryptomator Cryptomator.AppDir/AppRun
 
