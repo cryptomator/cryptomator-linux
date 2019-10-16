@@ -40,6 +40,10 @@ jobs:
           repo: cryptomator/cryptomator-linux
           tags: true
     - stage: "Package as AppImage"
+      addons:
+        apt:
+          packages:
+          - appstream
       install:
         - curl -L https://github.com/AppImage/AppImageKit/releases/download/10/appimagetool-x86_64.AppImage -o ./tools/appimagekit/appimagetool.AppImage
         - chmod +x ./tools/appimagekit/appimagetool.AppImage
