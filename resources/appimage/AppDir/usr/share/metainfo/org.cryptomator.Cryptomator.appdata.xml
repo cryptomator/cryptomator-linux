@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2018 Armin Schrenk <armin.schrenk@zoho.eu> -->
 <component type="desktop-application">
-  <id>org.cryptomator.Cryptomator</id>
+  <id>org.cryptomator.Cryptomator.desktop</id> <!-- see https://www.freedesktop.org/software/appstream/docs/sect-Metadata-Application.html#tag-id-desktopapp -->
   <metadata_license>FSFAP</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <name>Cryptomator</name>
