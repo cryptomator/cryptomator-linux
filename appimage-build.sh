@@ -14,7 +14,7 @@ mkdir -p Cryptomator.AppDir/usr/share/metainfo/
 cp resources/appimage/org.cryptomator.Cryptomator.svg Cryptomator.AppDir/usr/share/icons/hicolor/scalable/apps/org.cryptomator.Cryptomator.svg
 cp resources/appimage/org.cryptomator.Cryptomator.png Cryptomator.AppDir/usr/share/icons/hicolor/512x512/apps/org.cryptomator.Cryptomator.png
 cp resources/appimage/org.cryptomator.Cryptomator.appdata.xml Cryptomator.AppDir/usr/share/metainfo/org.cryptomator.Cryptomator.appdata.xml
-envsubst '${BUILD_VERSION}' < resources/appimage/org.cryptomator.Cryptomator.desktop > Cryptomator.AppDir/usr/share/applications/org.cryptomator.Cryptomator.desktop
+envsubst < resources/appimage/org.cryptomator.Cryptomator.desktop > Cryptomator.AppDir/usr/share/applications/org.cryptomator.Cryptomator.desktop
 ln -s usr/share/icons/hicolor/scalable/apps/org.cryptomator.Cryptomator.svg Cryptomator.AppDir/cryptomator.svg
 ln -s usr/share/icons/hicolor/scalable/apps/org.cryptomator.Cryptomator.svg Cryptomator.AppDir/.DirIcon
 ln -s usr/share/applications/org.cryptomator.Cryptomator.desktop Cryptomator.AppDir/org.cryptomator.Cryptomator.desktop
