@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Cryptomator
 Comment=Cloud Storage Encryption Utility
-Exec=cryptomator
 Version=${BUILD_VERSION}
+Exec=cryptomator %F
 Icon=org.cryptomator.Cryptomator
 Terminal=false
 Type=Application
