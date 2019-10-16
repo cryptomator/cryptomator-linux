@@ -2,6 +2,7 @@
 Name=Cryptomator
 Comment=Cloud Storage Encryption Utility
 Exec=cryptomator
+Version=${BUILD_VERSION}
 Icon=org.cryptomator.Cryptomator
 Terminal=false
 Type=Application
