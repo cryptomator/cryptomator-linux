@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2018 Armin Schrenk <armin.schrenk@zoho.eu> -->
+<component type="desktop-application">
+  <id>org.cryptomator.Cryptomator</id>
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>Cryptomator</name>
+  <summary>Multi-platform client-side encryption tool optimized for cloud storages</summary>
+  <description>
+    <p>Introduction:</p>
+    <p>
+      Cryptomator offers multi-platform transparent client-side encryption of your files in the cloud.
+      Download native binaries of Cryptomator on https://cryptomator.org/ or clone and build Cryptomator using Maven (instructions below).
+    </p>
+    <p>Features:</p>
+    <p>
+      <ul>
+        <li>Works with Dropbox, Google Drive, OneDrive, ownCloud, Nextcloud and any other cloud storage service which synchronizes with a local directory</li>
+        <li>Open Source means: No backdoors, control is better than trust</li>
+        <li>Client-side: No accounts, no data shared with any online service</li>
+        <li>Totally transparent: Just work on the virtual drive as if it were a USB flash drive</li>
+        <li>AES encryption with 256-bit key length</li>
+        <li>File names get encrypted</li>
+        <li>Folder structure gets obfuscated</li>
+        <li>Use as many vaults in your Dropbox as you want, each having individual passwords</li>
+        <li>One thousand commits for the security of your data!! :tada:</li>
+      </ul>
+    </p>
+    <p>Privacy:</p>
+    <p>
+      <ul>
+        <li>256-bit keys (unlimited strength policy bundled with native binaries)</li>
+        <li>Scrypt key derivation</li>
+        <li>Cryptographically secure random numbers for salts, IVs and the masterkey of course</li>
+        <li>Sensitive data is wiped from the heap asap</li>
+        <li>Lightweight: https://www.schneier.com/essays/archives/1999/11/a_plea_for_simplicit.html</li>
+      </ul>
+    </p>
+    <p>Consistency:</p>
+    <p>
+      <ul>
+        <li>HMAC over file contents to recognize changed ciphertext before decryption</li>
+        <li>I/O operations are transactional and atomic, if the filesystems support it</li>
+        <li>Each file contains all information needed for decryption (except for the key of course), no common metadata means no http://en.wikipedia.org/wiki/Single_point_of_failure</li>
+      </ul>
+    </p>
+    <p>Security Architecture:</p>
+    <p>
+      For more information on the security details visit https://cryptomator.org/architecture/.
+    </p>
+    <p>License:</p>
+    <p>
+      This project is dual-licensed under the GPLv3 for FOSS projects as well as a commercial license for independent software vendors and resellers. If you want to modify this application under different conditions, feel free to contact our support team.
+    </p>
+  </description>
+  <categories>
+      <category>Office</category>
+      <category>Security</category>
+      <category>FileTools</category>
+      <category>Java</category>
+  </categories>
+  <url type="homepage">http://cryptomator.org</url>
+  <url type="bugtracker">https://github.com/cryptomator/cryptomator/issues</url>
+  <url type="faq">https://community.cryptomator.org/c/kb/faq</url>
+  <url type="help">https://community.cryptomator.org/</url>
+  <url type="donation">https://cryptomator.org/</url>
+  <content_rating type="oars-1.0" />
+  <project_group>Cryptomator</project_group>
+  <provides>
+    <binary>cryptomator</binary>
+  </provides>
+  <launchable type="desktop-id">org.cryptomator.Cryptomator.desktop</launchable>
+</component>

@@ -13,11 +13,11 @@ mkdir -p Cryptomator.AppDir/usr/share/applications/
 mkdir -p Cryptomator.AppDir/usr/share/metainfo/
 cp resources/appimage/cryptomator.svg Cryptomator.AppDir/usr/share/icons/hicolor/scalable/apps/
 cp resources/appimage/cryptomator.png Cryptomator.AppDir/usr/share/icons/hicolor/512x512/apps/
-cp resources/appimage/cryptomator.desktop Cryptomator.AppDir/usr/share/applications/
-cp resources/appimage/cryptomator.appdata.xml Cryptomator.AppDir/usr/share/metainfo/
+cp resources/appimage/org.cryptomator.Cryptomator.desktop Cryptomator.AppDir/usr/share/applications/
+cp resources/appimage/org.cryptomator.Cryptomator.appdata.xml Cryptomator.AppDir/usr/share/metainfo/
 ln -s usr/share/icons/hicolor/scalable/apps/cryptomator.svg Cryptomator.AppDir/cryptomator.svg
 ln -s usr/share/icons/hicolor/scalable/apps/cryptomator.svg Cryptomator.AppDir/.DirIcon
-ln -s usr/share/applications/cryptomator.desktop Cryptomator.AppDir/cryptomator.desktop
+ln -s usr/share/applications/org.cryptomator.Cryptomator.desktop Cryptomator.AppDir/org.cryptomator.Cryptomator.desktop
 ln -s Cryptomator Cryptomator.AppDir/AppRun
 
 # build AppImage
