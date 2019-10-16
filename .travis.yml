@@ -39,9 +39,11 @@ jobs:
           repo: cryptomator/cryptomator-linux
           tags: true
     - stage: "Package as AppImage"
+      language: minimal
       addons:
         apt:
           packages:
+          - curl
           - appstream
           - tree
       install:
