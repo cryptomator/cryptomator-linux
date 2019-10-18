@@ -70,4 +70,19 @@
     <binary>cryptomator</binary>
   </provides>
   <launchable type="desktop-id">org.cryptomator.Cryptomator.desktop</launchable>
+  {{{releases
+  <releases>
+    <release version="{{release_version}}" date="{{release_date}}" type="{{release_type}}">
+      <url>https://github.com/cryptomator/cryptomator/releases/tag/{{release_version}}</url>
+      <artifacts>
+        <artifact type="binary">
+          <location>https://github.com/cryptomator/cryptomator/releases/download/{{release_version}}/cryptomator-{{release_version}}-x86_64.AppImage</location>
+        </artifact>
+        <artifact type="source">
+          <location>https://github.com/cryptomator/cryptomator/archive/{{release_version}}.tar.gz</location>
+        </artifact>
+      </artifacts>
+    </release>
+  </releases>
+  }}}
 </component>
