@@ -5,6 +5,9 @@ BUILD_VERSION=${1:-SNAPSHOT}
 if [ ! -d ./Cryptomator ]; then echo "./Cryptomator does not exist."; exit 1; fi
 if [ ! -x $(readlink -e ./tools/appimagekit/squashfs-root/AppRun) ]; then echo "./tools/appimagekit/squashfs-root/AppRun not executable."; exit 1; fi
 
+# render appdata.xml
+./render-appdata-template.sh resources/appdata.template.xml $BUILD_VERSION > resources/appimage/org.cryptomator.Cryptomator.appdata.xml
+
 # prepare AppDir
 mv Cryptomator Cryptomator.AppDir
 cp -r resources/appimage/AppDir/* Cryptomator.AppDir/
