@@ -1,5 +1,5 @@
 #!/bin/bash
-BUILD_VERSION=${1:-SNAPSHOT}
+UPSTREAM_VERSION=${1:-SNAPSHOT}
 
 # check preconditions
 if [ ! -d ./Cryptomator ]; then echo "./Cryptomator does not exist."; exit 1; fi
@@ -18,8 +18,8 @@ tree Cryptomator.AppDir
 
 # build AppImage
 export ARCH=x86_64
-if [[ ${BUILD_VERSION} == "SNAPSHOT" ]]; then
+if [[ ${UPSTREAM_VERSION} == "SNAPSHOT" ]]; then
   ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-SNAPSHOT-x86_64.AppImage -u 'bintray-zsync|cryptomator|cryptomator|cryptomator-linux|cryptomator-SNAPSHOT-x86_64.AppImage.zsync'
 else
-  ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-${BUILD_VERSION}-x86_64.AppImage -u 'bintray-zsync|cryptomator|cryptomator|cryptomator-linux|cryptomator-_latestVersion-x86_64.AppImage.zsync'
+  ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-${UPSTREAM_VERSION}-x86_64.AppImage -u 'bintray-zsync|cryptomator|cryptomator|cryptomator-linux|cryptomator-_latestVersion-x86_64.AppImage.zsync'
 fi
