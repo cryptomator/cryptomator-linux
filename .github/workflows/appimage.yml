@@ -14,7 +14,7 @@ jobs:
         with:
           java-version: 14
       - name: Download Buildkit
-        run: curl -o buildkit.zip https://github.com/cryptomator/cryptomator/releases/download/1.5.1/buildkit-linux.zip # TODO use ${GITHUB_REF##*/}
+        run: curl -Lo buildkit.zip https://github.com/cryptomator/cryptomator/releases/download/1.5.1/buildkit-linux.zip # TODO use ${GITHUB_REF##*/}
       - name: Unzip Buildkit
         run: unzip buildkit.zip
       - name: Set BUILD_VERSION
