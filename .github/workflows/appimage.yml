@@ -15,7 +15,7 @@ jobs:
         with:
           java-version: 14
       - name: Download Buildkit
-        run: curl -Lo buildkit.zip https://github.com/cryptomator/cryptomator/releases/download/1.5.1/buildkit-linux.zip # TODO use ${GITHUB_REF##*/}
+        run: curl -L https://github.com/cryptomator/cryptomator/releases/download/1.5.1/buildkit-linux.zip -o buildkit.zip # TODO use ${GITHUB_REF##*/}
       - name: Unzip Buildkit
         run: unzip buildkit.zip
       - name: Set BUILD_VERSION
@@ -53,11 +53,13 @@ jobs:
           --java-options "-Xmx512m"
           --main-class org.cryptomator.launcher.Cryptomator
           --main-jar launcher-1.5.1.jar
-      - name: Upload appdir.zip
+      - name: Archive appdir.tar.gz
+        run: tar -C app -czf appdir.tar.gz Cryptomator
+      - name: Upload appdir.tar.gz
         uses: actions/upload-artifact@v1
         with:
-          name: appdir.zip
-          path: app
+          name: appdir.tar.gz
+          path: appdir.tar.gz
   
   build-appimage:
     name: Build AppImage
@@ -65,11 +67,13 @@ jobs:
     needs: build-appdir
     steps:
       - uses: actions/checkout@v2
-      - name: Download appdir.zip
+      - name: Download appdir.tar.gz
         uses: actions/download-artifact@v1
         with:
-          name: appdir.zip
-          path: Cryptomator.AppDir
+          name: appdir.tar.gz
+          path: appdir.tar.gz
+      - name: Unarchive appdir.tar.gz
+        run: tar -xzvf appdir.tar.gz
       - name: Download AppImageKit
         run: |
           curl -L https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage -o ./tools/appimagekit/appimagetool.AppImage
@@ -77,6 +81,7 @@ jobs:
           (cd ./tools/appimagekit && ./appimagetool.AppImage --appimage-extract)
       - name: Patch Cryptomator.AppDir
         run: |
+          mv Cryptomator Cryptomator.AppDir
           cp -r resources/appimage/AppDir/* Cryptomator.AppDir/
           ln -s usr/share/icons/hicolor/scalable/apps/org.cryptomator.Cryptomator.svg Cryptomator.AppDir/org.cryptomator.Cryptomator.svg
           ln -s usr/share/icons/hicolor/scalable/apps/org.cryptomator.Cryptomator.svg Cryptomator.AppDir/Cryptomator.svg
