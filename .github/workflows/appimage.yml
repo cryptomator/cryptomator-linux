@@ -1,9 +1,8 @@
 name: AppImage
 
 on:
-  [push]
-  #tags:
-  #  - *
+  tags:
+    - *
 
 jobs: 
   build-appdir:
@@ -15,11 +14,13 @@ jobs:
         with:
           java-version: 14
       - name: Download Buildkit
-        run: curl -L https://github.com/cryptomator/cryptomator/releases/download/1.5.1/buildkit-linux.zip -o buildkit.zip # TODO use ${GITHUB_REF##*/}
+        run: curl -L https://github.com/cryptomator/cryptomator/releases/download/${GITHUB_REF##*/}/buildkit-linux.zip -o buildkit.zip
       - name: Unzip Buildkit
         run: unzip buildkit.zip
       - name: Set BUILD_VERSION
         run: echo "::set-env name=BUILD_VERSION::`git rev-list --count HEAD`"
+      - name: Set UPSTREAM_VERSION
+        run: echo "::set-env name=UPSTREAM_VERSION::`cat libs/version.txt`"
       - name: Create Runtime Image
         run: >
           ${JAVA_HOME}/bin/jlink
@@ -33,7 +34,7 @@ jobs:
           --strip-native-commands
           --compress=1
       - name: Create Application Image
-        run: >  # TODO use ${GITHUB_REF##*/} for --app-version and --main-jar
+        run: >
           ${JAVA_HOME}/bin/jpackage
           --verbose
           --type app-image
@@ -43,7 +44,7 @@ jobs:
           --name Cryptomator
           --vendor "Skymatic GmbH"
           --copyright "(C) 2016 - 2020 Skymatic GmbH"
-          --app-version 1.5.1
+          --app-version ${UPSTREAM_VERSION}
           --java-options "-Dcryptomator.logDir=\"~/.local/share/Cryptomator/logs\""
           --java-options "-Dcryptomator.settingsPath=\"~/.config/Cryptomator/settings.json:~/.Cryptomator/settings.json\""
           --java-options "-Dcryptomator.ipcPortPath=\"~/.config/Cryptomator/ipcPort.bin:~/.Cryptomator/ipcPort.bin\""
@@ -52,7 +53,7 @@ jobs:
           --java-options "-Xss2m"
           --java-options "-Xmx512m"
           --main-class org.cryptomator.launcher.Cryptomator
-          --main-jar launcher-1.5.1.jar
+          --main-jar launcher-${UPSTREAM_VERSION}.jar
       - name: Archive appdir.tar.gz
         run: tar -C app -czf appdir.tar.gz Cryptomator
       - name: Upload appdir.tar.gz
@@ -89,53 +90,53 @@ jobs:
           chmod +x ./tools/appimagekit/appimagetool.AppImage
           (cd ./tools/appimagekit && ./appimagetool.AppImage --appimage-extract)
       - name: Build AppImage
-        run: >  # TODO use ${GITHUB_REF##*/} for --app-version and --main-jar
-          ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-1.5.1-x86_64.AppImage -u 'bintray-zsync|cryptomator|cryptomator|cryptomator-linux|cryptomator-1.5.1-x86_64.AppImage.zsync'
-      - name: Upload cryptomator-1.5.1-x86_64.AppImage
+        run: >
+          ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-${GITHUB_REF##*/}-x86_64.AppImage -u 'bintray-zsync|cryptomator|cryptomator|cryptomator-linux|cryptomator-${GITHUB_REF##*/}-x86_64.AppImage.zsync'
+      - name: Upload cryptomator-${GITHUB_REF##*/}-x86_64.AppImage
         uses: actions/upload-artifact@v1
         with:
-          name: cryptomator-1.5.1-x86_64.AppImage
-          path: cryptomator-1.5.1-x86_64.AppImage
-      - name: Upload cryptomator-1.5.1-x86_64.AppImage.zsync
+          name: cryptomator-${GITHUB_REF##*/}-x86_64.AppImage
+          path: cryptomator-${GITHUB_REF##*/}-x86_64.AppImage
+      - name: Upload cryptomator-${GITHUB_REF##*/}-x86_64.AppImage.zsync
         uses: actions/upload-artifact@v1
         with:
-          name: cryptomator-1.5.1-x86_64.AppImage.zsync
-          path: cryptomator-1.5.1-x86_64.AppImage.zsync
+          name: cryptomator-${GITHUB_REF##*/}-x86_64.AppImage.zsync
+          path: cryptomator-${GITHUB_REF##*/}-x86_64.AppImage.zsync
           
   publish-bintray:
     name: Publish AppImage on Bintray
     runs-on: ubuntu-latest
     needs: build-appimage
     steps:
-      - name: Download cryptomator-1.5.1-x86_64.AppImage
+      - name: Download cryptomator-${GITHUB_REF##*/}-x86_64.AppImage
         uses: actions/download-artifact@v1
         with:
-          name: cryptomator-1.5.1-x86_64.AppImage
+          name: cryptomator-${GITHUB_REF##*/}-x86_64.AppImage
           path: .
-      - name: Download cryptomator-1.5.1-x86_64.AppImage.zsync
+      - name: Download cryptomator-${GITHUB_REF##*/}-x86_64.AppImage.zsync
         uses: actions/download-artifact@v1
         with:
-          name: cryptomator-1.5.1-x86_64.AppImage.zsync
+          name: cryptomator-${GITHUB_REF##*/}-x86_64.AppImage.zsync
           path: .
-      - name: Publish cryptomator-1.5.1-x86_64.AppImage on Bintray
+      - name: Publish cryptomator-${GITHUB_REF##*/}-x86_64.AppImage on Bintray
         env:
           BINTRAY_API_KEY: ${{ secrets.BINTRAY_API_KEY }}
         run: >
-          curl -T cryptomator-1.5.1-x86_64.AppImage
+          curl -T cryptomator-${GITHUB_REF##*/}-x86_64.AppImage
           -u cryptobot:${BINTRAY_API_KEY}
-          -H "X-Bintray-Package:cryptomator"
+          -H "X-Bintray-Package:cryptomator-linux"
           -H "X-Bintray-Version:snapshot"
           -H "X-Bintray-Override:1"
           -H "X-Bintray-Publish:0"
-          https://api.bintray.com/content/cryptomator/cryptomator/snapshot/cryptomator-1.5.1-x86_64.AppImage
-      - name: Publish cryptomator-1.5.1-x86_64.AppImage.zsync on Bintray
+          https://api.bintray.com/content/cryptomator/cryptomator/${GITHUB_REF##*/}/cryptomator-${GITHUB_REF##*/}-x86_64.AppImage
+      - name: Publish cryptomator-${GITHUB_REF##*/}-x86_64.AppImage.zsync on Bintray
         env:
           BINTRAY_API_KEY: ${{ secrets.BINTRAY_API_KEY }}
         run: >
-          curl -T cryptomator-1.5.1-x86_64.AppImage.zsync
+          curl -T cryptomator-${GITHUB_REF##*/}-x86_64.AppImage.zsync
           -u cryptobot:${BINTRAY_API_KEY}
-          -H "X-Bintray-Package:cryptomator"
+          -H "X-Bintray-Package:cryptomator-linux"
           -H "X-Bintray-Version:snapshot"
           -H "X-Bintray-Override:1"
           -H "X-Bintray-Publish:0"
-          https://api.bintray.com/content/cryptomator/cryptomator/snapshot/cryptomator-1.5.1-x86_64.AppImage.zsync
+          https://api.bintray.com/content/cryptomator/cryptomator/${GITHUB_REF##*/}/cryptomator-${GITHUB_REF##*/}-x86_64.AppImage.zsync
