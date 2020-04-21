@@ -1,4 +1,4 @@
-name: Build AppImage
+name: AppImage
 
 on:
   [push]
@@ -127,7 +127,7 @@ jobs:
           -H "X-Bintray-Version:snapshot"
           -H "X-Bintray-Override:1"
           -H "X-Bintray-Publish:0"
-          https://api.bintray.com/content/cryptomator/cryptomator/snapshot/cryptomator-SNAPSHOT-x86_64.AppImage
+          https://api.bintray.com/content/cryptomator/cryptomator/snapshot/cryptomator-1.5.1-x86_64.AppImage
       - name: Publish cryptomator-1.5.1-x86_64.AppImage.zsync on Bintray
         env:
           BINTRAY_API_KEY: ${{ secrets.BINTRAY_API_KEY }}
@@ -138,4 +138,4 @@ jobs:
           -H "X-Bintray-Version:snapshot"
           -H "X-Bintray-Override:1"
           -H "X-Bintray-Publish:0"
-          https://api.bintray.com/content/cryptomator/cryptomator/snapshot/cryptomator-SNAPSHOT-x86_64.AppImage.zsync
+          https://api.bintray.com/content/cryptomator/cryptomator/snapshot/cryptomator-1.5.1-x86_64.AppImage.zsync
