@@ -1,0 +1,93 @@
+name: Build AppImage
+
+on:
+  [push]
+  #tags:
+  #  - *
+
+jobs: 
+  build-appdir:
+    name: Build AppDir
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 14
+      - name: Download Buildkit
+        run: curl -o buildkit.zip https://github.com/cryptomator/cryptomator/releases/download/1.5.1/buildkit-linux.zip # TODO use ${GITHUB_REF##*/}
+      - name: Unzip Buildkit
+        run: unzip buildkit.zip
+      - name: Set BUILD_VERSION
+        run: ::set-env name=BUILD_VERSION::`git rev-list --count HEAD`
+      - name: Create Runtime Image
+        run: >
+          ${JAVA_HOME}/bin/jlink
+          --verbose
+          --output runtimeImage
+          --module-path "${JAVA_HOME/}/jmods"
+          --add-modules java.base,java.logging,java.xml,java.sql,java.management,java.security.sasl,java.naming,java.datatransfer,java.security.jgss,java.rmi,java.scripting,java.prefs,java.desktop,jdk.unsupported,java.net.http,jdk.crypto.ec
+          --no-header-files
+          --no-man-pages
+          --strip-debug
+          --strip-native-commands
+          --compress=1
+      - name: Create Application Image
+        run: >  # TODO use ${GITHUB_REF##*/} for --app-version and --main-jar
+          ${JAVA_HOME}/bin/jpackage
+          --verbose
+          --type app-image
+          --runtime-image runtimeImage
+          --input libs
+          --dest app
+          --name Cryptomator
+          --vendor "Skymatic GmbH"
+          --copyright "(C) 2016 - 2020 Skymatic GmbH"
+          --app-version 1.5.1
+          --java-options "-Dcryptomator.logDir=\"~/.local/share/Cryptomator/logs\""
+          --java-options "-Dcryptomator.settingsPath=\"~/.config/Cryptomator/settings.json:~/.Cryptomator/settings.json\""
+          --java-options "-Dcryptomator.ipcPortPath=\"~/.config/Cryptomator/ipcPort.bin:~/.Cryptomator/ipcPort.bin\""
+          --java-options "-Dcryptomator.mountPointsDir=\"~/.local/share/Cryptomator/mnt\""
+          --java-options "-Dcryptomator.buildNumber=\"appimage-${BUILD_VERSION}"
+          --java-options "-Xss2m"
+          --java-options "-Xmx512m"
+          --main-class org.cryptomator.launcher.Cryptomator
+          --main-jar launcher-1.5.1.jar
+      - name: Upload appdir.zip
+        uses: actions/upload-artifact@v1
+        with:
+          name: appdir.zip
+          path: app
+  
+  build-appimage:
+    name: Build AppImage
+    runs-on: ubuntu-latest
+    needs: build-appdir
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download appdir.zip
+        uses: actions/download-artifact@v1
+        with:
+          name: appdir.zip
+          path: Cryptomator.AppDir
+      - name: Download AppImageKit
+        run: |
+          curl -L https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage -o ./tools/appimagekit/appimagetool.AppImage
+          chmod +x ./tools/appimagekit/appimagetool.AppImage
+          (cd ./tools/appimagekit && ./appimagetool.AppImage --appimage-extract)
+      - name: Patch Cryptomator.AppDir
+        run: |
+          cp -r resources/appimage/AppDir/* Cryptomator.AppDir/
+          ln -s usr/share/icons/hicolor/scalable/apps/org.cryptomator.Cryptomator.svg Cryptomator.AppDir/org.cryptomator.Cryptomator.svg
+          ln -s usr/share/icons/hicolor/scalable/apps/org.cryptomator.Cryptomator.svg Cryptomator.AppDir/Cryptomator.svg
+          ln -s usr/share/icons/hicolor/scalable/apps/org.cryptomator.Cryptomator.svg Cryptomator.AppDir/.DirIcon
+          ln -s usr/share/applications/org.cryptomator.Cryptomator.desktop Cryptomator.AppDir/Cryptomator.desktop
+          ln -s Cryptomator Cryptomator.AppDir/AppRun
+          tree Cryptomator.AppDir
+      - name: Build AppImage
+        run: >  # TODO use ${GITHUB_REF##*/} for --app-version and --main-jar
+          ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-1.5.1-x86_64.AppImage -u 'bintray-zsync|cryptomator|cryptomator|cryptomator-linux|cryptomator-1.5.1-x86_64.AppImage.zsync'
+      - name: Upload cryptomator-1.5.1-x86_64.AppImage
+        uses: actions/upload-artifact@v1
+        with:
+          name: cryptomator-1.5.1-x86_64.AppImage
+          path: cryptomator-1.5.1-x86_64.AppImage
