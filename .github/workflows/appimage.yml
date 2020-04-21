@@ -1,8 +1,9 @@
 name: AppImage
 
 on:
-  tags:
-    - *
+  push:
+    tags:
+       - '*'
 
 jobs: 
   build-appdir:
