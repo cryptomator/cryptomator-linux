@@ -19,7 +19,7 @@ jobs:
       - name: Unzip Buildkit
         run: unzip buildkit.zip
       - name: Set BUILD_VERSION
-        echo: ::set-env name=BUILD_VERSION::`git rev-list --count HEAD`
+        run: echo "::set-env name=BUILD_VERSION::`git rev-list --count HEAD`"
       - name: Create Runtime Image
         run: >
           ${JAVA_HOME}/bin/jlink
