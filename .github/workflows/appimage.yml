@@ -71,7 +71,7 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: appdir.tar.gz
-          path: appdir.tar.gz
+          path: .
       - name: Unarchive appdir.tar.gz
         run: tar -xzvf appdir.tar.gz
       - name: Patch Cryptomator.AppDir
