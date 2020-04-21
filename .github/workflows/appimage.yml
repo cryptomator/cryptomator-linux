@@ -74,11 +74,6 @@ jobs:
           path: appdir.tar.gz
       - name: Unarchive appdir.tar.gz
         run: tar -xzvf appdir.tar.gz
-      - name: Download AppImageKit
-        run: |
-          curl -L https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage -o ./tools/appimagekit/appimagetool.AppImage
-          chmod +x ./tools/appimagekit/appimagetool.AppImage
-          (cd ./tools/appimagekit && ./appimagetool.AppImage --appimage-extract)
       - name: Patch Cryptomator.AppDir
         run: |
           mv Cryptomator Cryptomator.AppDir
@@ -89,6 +84,11 @@ jobs:
           ln -s usr/share/applications/org.cryptomator.Cryptomator.desktop Cryptomator.AppDir/Cryptomator.desktop
           ln -s Cryptomator Cryptomator.AppDir/AppRun
           tree Cryptomator.AppDir
+      - name: Download AppImageKit
+        run: |
+          curl -L https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage -o ./tools/appimagekit/appimagetool.AppImage
+          chmod +x ./tools/appimagekit/appimagetool.AppImage
+          (cd ./tools/appimagekit && ./appimagetool.AppImage --appimage-extract)
       - name: Build AppImage
         run: >  # TODO use ${GITHUB_REF##*/} for --app-version and --main-jar
           ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-1.5.1-x86_64.AppImage -u 'bintray-zsync|cryptomator|cryptomator|cryptomator-linux|cryptomator-1.5.1-x86_64.AppImage.zsync'
