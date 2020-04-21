@@ -130,7 +130,7 @@ jobs:
           curl -T cryptomator-SNAPSHOT-x86_64.AppImage
           -u cryptobot:${BINTRAY_API_KEY}
           -H "X-Bintray-Package:cryptomator-linux"
-          -H "X-Bintray-Version:snapshot"
+          -H "X-Bintray-Version:${GITHUB_REF##*/}"
           -H "X-Bintray-Override:1"
           -H "X-Bintray-Publish:0"
           https://api.bintray.com/content/cryptomator/cryptomator/${GITHUB_REF##*/}/cryptomator-${GITHUB_REF##*/}-x86_64.AppImage
@@ -141,7 +141,7 @@ jobs:
           curl -T cryptomator-SNAPSHOT-x86_64.AppImage.zsync
           -u cryptobot:${BINTRAY_API_KEY}
           -H "X-Bintray-Package:cryptomator-linux"
-          -H "X-Bintray-Version:snapshot"
+          -H "X-Bintray-Version:${GITHUB_REF##*/}"
           -H "X-Bintray-Override:1"
           -H "X-Bintray-Publish:0"
           https://api.bintray.com/content/cryptomator/cryptomator/${GITHUB_REF##*/}/cryptomator-${GITHUB_REF##*/}-x86_64.AppImage.zsync
