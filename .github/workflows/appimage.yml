@@ -53,7 +53,6 @@ jobs:
           --java-options "-Dcryptomator.buildNumber=\"appimage-${BUILD_VERSION}"
           --java-options "-Xss2m"
           --java-options "-Xmx512m"
-          --java-options "-Xmx512m"
           --java-options "-Djdk.gtk.version=2"
           --main-class org.cryptomator.launcher.Cryptomator
           --main-jar launcher-${UPSTREAM_VERSION}.jar
