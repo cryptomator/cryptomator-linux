@@ -50,7 +50,7 @@ jobs:
           --java-options "-Dcryptomator.settingsPath=\"~/.config/Cryptomator/settings.json:~/.Cryptomator/settings.json\""
           --java-options "-Dcryptomator.ipcPortPath=\"~/.config/Cryptomator/ipcPort.bin:~/.Cryptomator/ipcPort.bin\""
           --java-options "-Dcryptomator.mountPointsDir=\"~/.local/share/Cryptomator/mnt\""
-          --java-options "-Dcryptomator.buildNumber=\"appimage-${BUILD_VERSION}"
+          --java-options "-Dcryptomator.buildNumber=\"appimage-${BUILD_VERSION}\""
           --java-options "-Xss2m"
           --java-options "-Xmx512m"
           --java-options "-Djdk.gtk.version=2"
