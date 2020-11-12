@@ -4,27 +4,24 @@ cd $(dirname $0)
 BUILD_NUMBER=$(cat ./build.number)
 
 # determine GTK version
-DETERMINE_CMD_GTK2="echo" #just a dummy
-DETERMINE_CMD_GTK3="echo" #just a dummy
+GTK2_CMD_OUT="echo" #just a dummy
+GTK3_CMD_OUT="echo" #just a dummy
 if [ -n $(which dpkg) ]
     then #do stuff for debian based things
-    DETERMINE_CMD_GTK2="dpkg -l libgtk* | grep -e '\^ii' | grep -e 'libgtk2-*'"
-    DETERMINE_CMD_GTK3="dpkg -l libgtk* | grep -e '\^ii' | grep -e 'libgtk3-*'"
+    GTK2_CMD_OUT=`dpkg -l libgtk* | grep -e '\^ii' | grep -e 'libgtk2-*'`
+    GTK3_CMD_OUT=`dpkg -l libgtk* | grep -e '\^ii' | grep -e 'libgtk3-*'`
 elif [ -n $(which rpm) ]
     then # do stuff for rpm based things
-    DETERMINE_CMD_GTK2="rpm -qa | grep -e '^gtk2-[0-9][0-9]*'"
-    DETERMINE_CMD_GTK3="rpm -qa | grep -e '^gtk3-[0-9][0-9]*'"
+    GTK2_CMD_OUT=`rpm -qa | grep -e '\^gtk2-[0-9][0-9]*'`
+    GTK3_CMD_OUT=`rpm -qa | grep -e '\^gtk3-[0-9][0-9]*'`
 elif [ -n $(which pacman)]
     then #don't forget arch
-    DETERMINE_CMD_GTK2="pacman -Qi gtk2"
-    DETERMINE_CMD_GTK3="pacman -Qi gtk3"
+    GTK2_CMD_OUT=`pacman -Qi gtk2`
+    GTK3_CMD_OUT=`pacman -Qi gtk3`
 fi
 
-CMD_OUT_NOT_EMPTY=$( test -z $(eval $DETERMINE_CMD_GTK2) )
-GTK2_PRESENT=$( test $? -eq 0 )  &&  $CMD_OUT_NOT_EMPTY
-
-CMD_OUT_NOT_EMPTY=$( [ -z $(eval $DETERMINE_CMD_GTK3) ] )
-GTK3_PRESENT=$( test $? -eq 0 ) && $CMD_OUT_NOT_EMPTY
+GTK2_PRESENT=$( test $? -eq 0 )  &&  $( test -z $GTK2_CMD_OUT)
+GTK3_PRESENT=$( test $? -eq 0 ) && $( test -z $GTK3_CMD_OUT )
 
 if $GTK2_PRESENT && (! $GTK3_PRESENT )
     then
