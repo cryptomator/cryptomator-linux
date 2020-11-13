@@ -26,7 +26,7 @@ else
 	GTK_FLAG="-Djdk.gtk.version=3"
 fi
 
-# workaround for ISSUE
+# workaround for issue #27
 export LD_PRELOAD=libs/libjffi.so
 
 # start Cryptomator
