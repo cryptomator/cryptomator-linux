@@ -13,9 +13,6 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 14
-      - run: |
-          mkdir build
-          cd build
       - name: Download Buildkit
         run: curl -L https://github.com/cryptomator/cryptomator/releases/download/${GITHUB_REF##*/}/buildkit-linux.zip -o buildkit.zip
       - name: Unzip Buildkit
@@ -50,9 +47,7 @@ jobs:
     needs: build-appdir
     steps:
       - uses: actions/checkout@v2
-      - run: |
-        mkdir build
-        cd build
+      - run: mkdir build && cd build
       - name: Download appdir.tar.gz
         uses: actions/download-artifact@v1
         with:
