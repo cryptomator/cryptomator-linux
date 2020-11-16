@@ -15,7 +15,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         run: curl -L https://github.com/cryptomator/cryptomator/releases/download/${GITHUB_REF##*/}/buildkit-linux.zip -o buildkit.zip
       - name: Download Buildkit (latest)
-        if: ! startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/heads/')
         run: curl -L https://github.com/cryptomator/cryptomator/releases/latest/download/buildkit-linux.zip -o buildkit.zip
       - name: Unzip Buildkit
         run: unzip buildkit.zip
