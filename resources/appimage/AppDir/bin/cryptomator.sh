@@ -4,8 +4,8 @@ cd $(dirname $0)
 BUILD_NUMBER=$(cat ./build.number)
 
 # determine GTK version
-GTK2_PRESENT=$(test -z "x") #dummy value
-GTK3_PRESENT=$(test -z "") #dummy value
+GTK2_PRESENT=$(test -z "x") #always false
+GTK3_PRESENT=$(test -z "") #always true
 if [ -n $(which dpkg) ]; then #do stuff for debian based things
 	GTK2_PRESENT=$( test -z `dpkg -l libgtk* | grep -e '\^ii' | grep -e 'libgtk2-*'` )
 	GTK3_PRESENT=$( test -z `dpkg -l libgtk* | grep -e '\^ii' | grep -e 'libgtk3-*'` )
@@ -22,8 +22,6 @@ fi
 
 if $GTK2_PRESENT && (! $GTK3_PRESENT ); then
 	GTK_FLAG="-Djdk.gtk.version=2"
-else
-	GTK_FLAG="-Djdk.gtk.version=3"
 fi
 
 # workaround for issue #27
