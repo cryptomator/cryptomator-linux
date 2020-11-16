@@ -85,13 +85,13 @@ jobs:
       - name: Upload AppImage
         uses: actions/upload-artifact@v1
         with:
-          name: cryptomator-${BUILD_VERSION}-x86_64.AppImage
-          path: cryptomator-${BUILD_VERSION}-x86_64.AppImage
+          name: cryptomator-${{ env.BUILD_VERSION }}-x86_64.AppImage
+          path: cryptomator-${{ env.BUILD_VERSION }}-x86_64.AppImage
       - name: Upload AppImage.zsync
         uses: actions/upload-artifact@v1
         with:
-          name: cryptomator-${BUILD_VERSION}-x86_64.AppImage.zsync
-          path: cryptomator-${BUILD_VERSION}-x86_64.AppImage.zsync
+          name: cryptomator-${{ env.BUILD_VERSION }}-x86_64.AppImage.zsync
+          path: cryptomator-${{ env.BUILD_VERSION }}-x86_64.AppImage.zsync
           
   publish-bintray:
     name: Publish on Bintray
