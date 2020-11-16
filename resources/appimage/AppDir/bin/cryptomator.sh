@@ -1,8 +1,6 @@
 #!/bin/sh
 cd $(dirname $0)
 
-BUILD_NUMBER=$(cat ./build.number)
-
 # determine GTK version
 GTK2_PRESENT=$(test -z "x") #always false
 GTK3_PRESENT=$(test -z "") #always true
