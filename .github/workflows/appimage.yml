@@ -1,9 +1,7 @@
 name: AppImage
 
 on:
-  push:
-    tags:
-       - '*'
+  [push]
 
 jobs: 
   build-appdir:
@@ -94,6 +92,7 @@ jobs:
   publish-bintray:
     name: Publish on Bintray
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/') # only when tagged
     needs: build-appimage
     steps:
       - name: Download cryptomator-SNAPSHOT-x86_64.AppImage
