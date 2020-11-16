@@ -34,7 +34,7 @@ export LD_PRELOAD=libs/libjffi.so
 	-Dcryptomator.mountPointsDir="~/.local/share/Cryptomator/mnt" \
 	-Dcryptomator.settingsPath="~/.config/Cryptomator/settings.json:~/.Cryptomator/settings.json" \
 	-Dcryptomator.ipcPortPath="~/.config/Cryptomator/ipcPort.bin:~/.Cryptomator/ipcPort.bin" \
-	-Dcryptomator.buildNumber="appimage-${BUILD_NUMBER}" \
+	-Dcryptomator.buildNumber="appimage-${REVISION_NO}" \
 	$GTK_FLAG \
 	-Xss2m \
 	-Xmx512m \

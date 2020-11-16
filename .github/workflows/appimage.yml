@@ -33,7 +33,7 @@ jobs:
       - name: Workaround for issue 27
         run: |
           JFFI_NATIVE_JAR=`ls libs/ | grep -e 'jffi-[1-9]\.[0-9]\{1,2\}.[0-9]\{1,2\}-native.jar'`
-          ${JAVA_HOME}/bin/jar xf libs/${JFFI_NATIVE_JAR} /jni/x86_64-Linux/
+          ${JAVA_HOME}/bin/jar -xf libs/${JFFI_NATIVE_JAR} /jni/x86_64-Linux/
           mv jni/x86_64-Linux/* libs/libjffi.so
       - name: Archive appdir.tar.gz
         run: tar -czf appdir.tar.gz runtimeImage LICENSE.txt libs
@@ -57,22 +57,18 @@ jobs:
             echo "BUILD_VERSION=SNAPSHOT" >> $GITHUB_ENV
           fi
       - uses: actions/checkout@v2
-      - run: mkdir build && cd build
       - name: Download appdir.tar.gz
         uses: actions/download-artifact@v1
         with:
           name: appdir.tar.gz
           path: .
       - name: Unarchive appdir.tar.gz
-        run: tar -xzvf appdir.tar.gz
+        run: mkdir Cryptomator.AppDir && tar -xzvf appdir.tar.gz -C Cryptomator.AppDir
       - name: Patch Cryptomator.AppDir
         run: |
-          mkdir Cryptomator.AppDir
-          mv LICENSE.txt Cryptomator.AppDir/LICENSE.txt
-          mv runtimeImage Cryptomator.AppDir/runtimeImage
-          mv libs Cryptomator.AppDir/libs
-          cp -r ../resources/appimage/AppDir/* Cryptomator.AppDir/
-          echo `git rev-list --count HEAD` > Cryptomator.AppDir/build.number
+          cp -r resources/appimage/AppDir/* Cryptomator.AppDir/
+          REVISION_NO=`git rev-list --count HEAD`
+          envsubst '${REVISION_NO}' < resources/appimage/AppDir/bin/cryptomator.sh > Cryptomator.AppDir/bin/cryptomator.sh
           ln -s usr/share/icons/hicolor/scalable/apps/org.cryptomator.Cryptomator.svg Cryptomator.AppDir/org.cryptomator.Cryptomator.svg
           ln -s usr/share/icons/hicolor/scalable/apps/org.cryptomator.Cryptomator.svg Cryptomator.AppDir/Cryptomator.svg
           ln -s usr/share/icons/hicolor/scalable/apps/org.cryptomator.Cryptomator.svg Cryptomator.AppDir/.DirIcon
