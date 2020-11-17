@@ -61,6 +61,8 @@ jobs:
             echo "::set-output name=version::SNAPSHOT"
           fi
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Download appdir.tar.gz
         uses: actions/download-artifact@v1
         with:
@@ -71,7 +73,7 @@ jobs:
       - name: Patch Cryptomator.AppDir
         run: |
           cp -r resources/appimage/AppDir/* Cryptomator.AppDir/
-          export REVISION_NO=`git rev-list --count origin/HEAD`
+          export REVISION_NO=`git rev-list --count HEAD`
           envsubst '${REVISION_NO}' < resources/appimage/AppDir/bin/cryptomator.sh > Cryptomator.AppDir/bin/cryptomator.sh
           ln -s usr/share/icons/hicolor/scalable/apps/org.cryptomator.Cryptomator.svg Cryptomator.AppDir/org.cryptomator.Cryptomator.svg
           ln -s usr/share/icons/hicolor/scalable/apps/org.cryptomator.Cryptomator.svg Cryptomator.AppDir/Cryptomator.svg
