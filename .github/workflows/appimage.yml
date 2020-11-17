@@ -23,7 +23,7 @@ jobs:
         run: >
           ${JAVA_HOME}/bin/jlink
           --verbose
-          --output runtimeImage
+          --output runtime
           --module-path "${JAVA_HOME/}/jmods"
           --add-modules java.base,java.logging,java.xml,java.sql,java.management,java.security.sasl,java.naming,java.datatransfer,java.security.jgss,java.rmi,java.scripting,java.prefs,java.desktop,jdk.security.auth,jdk.unsupported,java.net.http,jdk.crypto.ec
           --no-header-files
@@ -36,7 +36,7 @@ jobs:
           ${JAVA_HOME}/bin/jar -xf libs/${JFFI_NATIVE_JAR} /jni/x86_64-Linux/
           mv jni/x86_64-Linux/* libs/libjffi.so
       - name: Archive appdir.tar.gz
-        run: tar -czf appdir.tar.gz runtimeImage LICENSE.txt libs
+        run: tar -czf appdir.tar.gz runtime LICENSE.txt libs
       - name: Upload appdir.tar.gz
         uses: actions/upload-artifact@v1
         with:

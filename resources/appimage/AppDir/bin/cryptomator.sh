@@ -26,7 +26,7 @@ fi
 export LD_PRELOAD=libs/libjffi.so
 
 # start Cryptomator
-./runtimeImage/bin/java \
+./runtime/bin/java \
 	-cp "./libs/*" \
 	-Dcryptomator.logDir="~/.local/share/Cryptomator/logs" \
 	-Dcryptomator.mountPointsDir="~/.local/share/Cryptomator/mnt" \
