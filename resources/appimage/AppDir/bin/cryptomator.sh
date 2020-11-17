@@ -11,10 +11,8 @@ elif command -v rpm &> /dev/null; then # do stuff for rpm based things (includin
 	GTK2_PRESENT=`rpm -qa | grep -e '\^gtk2-[0-9][0-9]*'`
 	GTK3_PRESENT=`rpm -qa | grep -e '\^gtk3-[0-9][0-9]*'`
 elif command -v pacman &> /dev/null; then # don't forget arch
-	pacman -Qi gtk2
-	GTK2_PRESENT=$( test $? -eq 0 )
-	pacman -Qi gtk3
-	GTK3_PRESENT=$( test $? -eq 0 )
+	GTK2_PRESENT=`pacman -Qi gtk2`
+	GTK3_PRESENT=`pacman -Qi gtk3`
 fi
 
 
