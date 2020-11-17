@@ -2,8 +2,8 @@
 cd $(dirname $0)
 
 # determine GTK version
-GTK2_PRESENT=$(test -z "x") #always false
-GTK3_PRESENT=$(test -z "") #always true
+GTK2_PRESENT=1 # initially false
+GTK3_PRESENT=0 # initially true
 if command -v dpkg &> /dev/null; then #do stuff for debian based things
 	GTK2_PRESENT=$( test -z `dpkg -l libgtk* | grep -e '\^ii' | grep -e 'libgtk2-*'` )
 	GTK3_PRESENT=$( test -z `dpkg -l libgtk* | grep -e '\^ii' | grep -e 'libgtk3-*'` )
