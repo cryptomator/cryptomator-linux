@@ -6,7 +6,7 @@ GTK2_PRESENT=1 # initially false
 GTK3_PRESENT=0 # initially true
 if command -v dpkg &> /dev/null; then # do stuff for debian based things
 	GTK2_PRESENT=`dpkg -l libgtk* | grep -e '\^ii' | grep -e 'libgtk2-*' &> /dev/null; echo $?`
-	GTK3_PRESENT=`dpkg -l libgtk* | grep -e '\^ii' | grep -e 'libgtk3-*' &> /dev/null; echo $?`
+	GTK3_PRESENT=`dpkg -l libgtk* | grep -e '\^ii' | grep -e 'libgtk-3-*' &> /dev/null; echo $?`
 elif command -v rpm &> /dev/null; then # do stuff for rpm based things (including yum/dnf)
 	GTK2_PRESENT=`rpm -qa | grep -e '\^gtk2-[0-9][0-9]*' &> /dev/null; echo $?`
 	GTK3_PRESENT=`rpm -qa | grep -e '\^gtk3-[0-9][0-9]*' &> /dev/null; echo $?`
