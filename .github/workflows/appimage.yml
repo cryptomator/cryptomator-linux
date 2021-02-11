@@ -13,7 +13,7 @@ jobs:
           java-version: 15
       - name: Download Buildkit (tagged) -- TODO remove hardcoded version
         if: startsWith(github.ref, 'refs/tags/')
-        run: curl -L https://github.com/cryptomator/cryptomator/releases/download/1.5.12/buildkit-linux.zip -o buildkit.zip
+        run: curl -L https://github.com/cryptomator/cryptomator/releases/download/1.5.11/buildkit-linux.zip -o buildkit.zip
       - name: Download Buildkit (latest)
         if: startsWith(github.ref, 'refs/heads/')
         run: curl -L https://github.com/cryptomator/cryptomator/releases/latest/download/buildkit-linux.zip -o buildkit.zip
