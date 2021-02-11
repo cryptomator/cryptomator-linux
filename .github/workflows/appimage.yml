@@ -140,3 +140,53 @@ jobs:
           -H "X-Bintray-Override:1"
           -H "X-Bintray-Publish:1"
           https://api.bintray.com/content/cryptomator/cryptomator/${GITHUB_REF##*/}/cryptomator-${APPIMG_VERSION}-x86_64.AppImage.zsync
+
+  publish-github:
+    name: Publish on Github 
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/') # only when tagged
+    needs: build-appimage
+    steps:
+      - name: Get version
+        id: getversion
+        run: echo "APPIMG_VERSION=${{ needs.build-appimage.outputs.appimage-version }}" >> $GITHUB_ENV
+      - name: Download AppImage
+        uses: actions/download-artifact@v1
+        with:
+          name: cryptomator-${{ env.APPIMG_VERSION }}-x86_64.AppImage
+          path: .
+      - name: Download AppImage.zsync
+        uses: actions/download-artifact@v1
+        with:
+          name: cryptomator-${{ env.APPIMG_VERSION }}-x86_64.AppImage.zsync
+          path: .
+      - name: Create release on Github
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          body: |
+            :construction: Work in Progress
+          draft: true
+          prerelease: false
+      - name: Upload appimage to GitHub releases
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: cryptomator-${APPIMG_VERSION}-x86_64.AppImage
+          asset_name: cryptomator-${APPIMG_VERSION}-x86_64.AppImage
+          asset_content_type: application/vnd.appimage
+      - name: Upload zsync file to GitHub releases
+        uses: actions/upload-release-asset@v1.0.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: cryptomator-${APPIMG_VERSION}-x86_64.AppImage.zsync
+          asset_name: cryptomator-${APPIMG_VERSION}-x86_64.AppImage.zsync
+          asset_content_type: application/x-zsync
