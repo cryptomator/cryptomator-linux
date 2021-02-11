@@ -87,7 +87,7 @@ jobs:
           (cd ./tools/appimagekit && ./appimagetool.AppImage --appimage-extract)
       - name: Build AppImage with update info
         run: >
-          ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-${BUILD_VERSION}-x86_64.AppImage -u 'gh-releases-zsync|cryptomator|cryptomator-linux|latest|cryptomator-*-x86_64.AppImage.zsync'
+          ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-${BUILD_VERSION}-x86_64.AppImage -u 'gh-releases-zsync|cryptomator|cryptomator|latest|cryptomator-*-x86_64.AppImage.zsync'
       - name: Upload AppImage
         uses: actions/upload-artifact@v1
         with:
