@@ -85,9 +85,9 @@ jobs:
           curl -L https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage -o ./tools/appimagekit/appimagetool.AppImage
           chmod +x ./tools/appimagekit/appimagetool.AppImage
           (cd ./tools/appimagekit && ./appimagetool.AppImage --appimage-extract)
-      - name: Build AppImage
+      - name: Build AppImage with update info
         run: >
-          ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-${BUILD_VERSION}-x86_64.AppImage -u 'bintray-zsync|cryptomator|cryptomator|cryptomator-linux|cryptomator-_latestVersion-x86_64.AppImage.zsync'
+          ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-${BUILD_VERSION}-x86_64.AppImage -u 'gh-releases-zsync|cryptomator|cryptomator-linux|latest|cryptomator-*-x86_64.AppImage.zsync'
       - name: Upload AppImage
         uses: actions/upload-artifact@v1
         with:
