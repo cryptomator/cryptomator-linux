@@ -11,9 +11,9 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 15
-      - name: Download Buildkit (tagged)
+      - name: Download Buildkit (tagged) TODO: remove hardcoded version
         if: startsWith(github.ref, 'refs/tags/')
-        run: curl -L https://github.com/cryptomator/cryptomator/releases/download/${GITHUB_REF##*/}/buildkit-linux.zip -o buildkit.zip
+        run: curl -L https://github.com/cryptomator/cryptomator/releases/download/1.5.12/buildkit-linux.zip -o buildkit.zip
       - name: Download Buildkit (latest)
         if: startsWith(github.ref, 'refs/heads/')
         run: curl -L https://github.com/cryptomator/cryptomator/releases/latest/download/buildkit-linux.zip -o buildkit.zip
@@ -102,7 +102,7 @@ jobs:
   publish-bintray:
     name: Publish on Bintray
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/') # only when tagged
+    if: ${{ false }} #startsWith(github.ref, 'refs/tags/') # only when tagged
     needs: build-appimage
     steps:
       - name: Get version
