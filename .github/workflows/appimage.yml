@@ -68,6 +68,13 @@ jobs:
         with:
           name: appdir.tar.gz
           path: .
+      - name: Prepare GPG-Agent for signing with key 615D449FE6E6A235
+        run: |
+          echo "${GPG_PRIVATE_KEY}" | gpg --batch --quiet --import
+          echo "${GPG_PASSPHRASE}" | gpg --batch --quiet --passphrase-fd 0 --pinentry-mode loopback --dry-run --clearsign appdir.tar.gz
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.RELEASES_GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.RELEASES_GPG_PASSPHRASE }}
       - name: Unarchive appdir.tar.gz
         run: mkdir Cryptomator.AppDir && tar -xzvf appdir.tar.gz -C Cryptomator.AppDir
       - name: Patch Cryptomator.AppDir
@@ -85,9 +92,11 @@ jobs:
           curl -L https://github.com/AppImage/AppImageKit/releases/download/12/appimagetool-x86_64.AppImage -o ./tools/appimagekit/appimagetool.AppImage
           chmod +x ./tools/appimagekit/appimagetool.AppImage
           (cd ./tools/appimagekit && ./appimagetool.AppImage --appimage-extract)
-      - name: Build AppImage with update info
+      - name: Build AppImage
         run: >
-          ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-${BUILD_VERSION}-x86_64.AppImage -u 'gh-releases-zsync|cryptomator|cryptomator|latest|cryptomator-*-x86_64.AppImage.zsync'
+          ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-${BUILD_VERSION}-x86_64.AppImage \
+          -u 'gh-releases-zsync|cryptomator|cryptomator|latest|cryptomator-*-x86_64.AppImage.zsync' \
+          --sign --sign-key=615D449FE6E6A235 --sign-args="--batch --pinentry-mode loopback"
       - name: Upload AppImage
         uses: actions/upload-artifact@v1
         with:
