@@ -70,10 +70,8 @@ jobs:
           path: .
       - name: Prepare GPG-Agent for signing with key 615D449FE6E6A235
         run: |
-          echo "${GPG_PRIVATE_KEY}" > tmp.key
-          gpg --batch --quiet --import tmp.key
-          rm tmp.key
-          echo "${GPG_PASSPHRASE}" | gpg --batch --quiet --passphrase-fd 0 --pinentry-mode loopback --dry-run --clearsign appdir.tar.gz
+          echo "${GPG_PRIVATE_KEY}" | gpg --batch --quiet --import
+          echo "${GPG_PASSPHRASE}" | gpg --batch --quiet --passphrase-fd 0 --pinentry-mode loopback --dry-run --sign appdir.tar.gz
         env:
           GPG_PRIVATE_KEY: ${{ secrets.RELEASES_GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.RELEASES_GPG_PASSPHRASE }}
