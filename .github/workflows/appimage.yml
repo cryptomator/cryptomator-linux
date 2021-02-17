@@ -70,7 +70,9 @@ jobs:
           path: .
       - name: Prepare GPG-Agent for signing with key 615D449FE6E6A235
         run: |
-          echo "${GPG_PRIVATE_KEY}" | gpg --batch --quiet --import
+          echo "${GPG_PRIVATE_KEY}" > tmp.key
+          gpg --batch --quiet --import tmp.key
+          rm tmp.key
           echo "${GPG_PASSPHRASE}" | gpg --batch --quiet --passphrase-fd 0 --pinentry-mode loopback --dry-run --clearsign appdir.tar.gz
         env:
           GPG_PRIVATE_KEY: ${{ secrets.RELEASES_GPG_PRIVATE_KEY }}
@@ -94,8 +96,8 @@ jobs:
           (cd ./tools/appimagekit && ./appimagetool.AppImage --appimage-extract)
       - name: Build AppImage
         run: >
-          ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-${BUILD_VERSION}-x86_64.AppImage \
-          -u 'gh-releases-zsync|cryptomator|cryptomator|latest|cryptomator-*-x86_64.AppImage.zsync' \
+          ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-${BUILD_VERSION}-x86_64.AppImage
+          -u 'gh-releases-zsync|cryptomator|cryptomator|latest|cryptomator-*-x86_64.AppImage.zsync'
           --sign --sign-key=615D449FE6E6A235 --sign-args="--batch --pinentry-mode loopback"
       - name: Upload AppImage
         uses: actions/upload-artifact@v1
