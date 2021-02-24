@@ -137,7 +137,7 @@ jobs:
           -H "X-Bintray-Version:${GITHUB_REF##*/}"
           -H "X-Bintray-Override:1"
           -H "X-Bintray-Publish:1"
-          https://api.bintray.com/content/cryptomator/cryptomator/${GITHUB_REF##*/}/cryptomator-${APPIMG_VERSION}-x86_64.AppImage
+          https://api.bintray.com/content/cryptomator/cryptomator/cryptomator-${APPIMG_VERSION}-x86_64.AppImage
       - name: Upload zsync file to Bintray
         env:
           BINTRAY_API_KEY: ${{ secrets.BINTRAY_API_KEY }}
@@ -148,7 +148,7 @@ jobs:
           -H "X-Bintray-Version:${GITHUB_REF##*/}"
           -H "X-Bintray-Override:1"
           -H "X-Bintray-Publish:1"
-          https://api.bintray.com/content/cryptomator/cryptomator/${GITHUB_REF##*/}/cryptomator-${APPIMG_VERSION}-x86_64.AppImage.zsync
+          https://api.bintray.com/content/cryptomator/cryptomator/cryptomator-${APPIMG_VERSION}-x86_64.AppImage.zsync
 
   publish-github:
     name: Publish on Github 
