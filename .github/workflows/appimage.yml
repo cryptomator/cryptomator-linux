@@ -108,6 +108,7 @@ jobs:
           name: cryptomator-${{ env.BUILD_VERSION }}-x86_64.AppImage.zsync
           path: cryptomator-${{ env.BUILD_VERSION }}-x86_64.AppImage.zsync
           
+  #To be removed with next commit
   publish-bintray:
     name: Publish on Bintray
     runs-on: ubuntu-latest
