@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/setup-java@v1
         with:
-          java-version: 15
+          java-version: 16
       - name: Download Buildkit (tagged)
         if: startsWith(github.ref, 'refs/tags/')
         run: curl -L https://github.com/cryptomator/cryptomator/releases/download/${GITHUB_REF##*/}/buildkit-linux.zip -o buildkit.zip
