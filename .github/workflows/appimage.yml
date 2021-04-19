@@ -37,11 +37,12 @@ jobs:
           mv jni/x86_64-Linux/* libs/libjffi.so
       - name: Archive appdir.tar.gz
         run: tar -czf appdir.tar.gz runtime LICENSE.txt libs
-      - name: Upload appdir.tar.gz
-        uses: actions/upload-artifact@v1
+      - name: Upload appdir
+        uses: actions/upload-artifact@v2
         with:
-          name: appdir.tar.gz
+          name: appdir
           path: appdir.tar.gz
+          if-no-files-found: error
   
   build-appimage:
     name: Build AppImage
@@ -63,15 +64,15 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Download appdir.tar.gz
-        uses: actions/download-artifact@v1
+      - name: Download appdir
+        uses: actions/download-artifact@v2
         with:
-          name: appdir.tar.gz
+          name: appdir
           path: .
       - name: Prepare GPG-Agent for signing with key 615D449FE6E6A235
         run: |
           echo "${GPG_PRIVATE_KEY}" | gpg --batch --quiet --import
-          echo "${GPG_PASSPHRASE}" | gpg --batch --quiet --passphrase-fd 0 --pinentry-mode loopback --dry-run --sign appdir.tar.gz
+          echo "${GPG_PASSPHRASE}" | gpg --batch --quiet --passphrase-fd 0 --pinentry-mode loopback -u 615D449FE6E6A235 --dry-run --sign appdir.tar.gz
         env:
           GPG_PRIVATE_KEY: ${{ secrets.RELEASES_GPG_PRIVATE_KEY }}
           GPG_PASSPHRASE: ${{ secrets.RELEASES_GPG_PASSPHRASE }}
@@ -97,16 +98,20 @@ jobs:
           ./tools/appimagekit/squashfs-root/AppRun Cryptomator.AppDir cryptomator-${BUILD_VERSION}-x86_64.AppImage
           -u 'gh-releases-zsync|cryptomator|cryptomator|latest|cryptomator-*-x86_64.AppImage.zsync'
           --sign --sign-key=615D449FE6E6A235 --sign-args="--batch --pinentry-mode loopback"
+      - name: Create Detached GPG Signature
+        run: |
+          gpg --batch --quiet --pinentry-mode loopback -u 615D449FE6E6A235 --detach-sign -a cryptomator-${{ env.BUILD_VERSION }}-x86_64.AppImage
+          gpg --batch --quiet --pinentry-mode loopback -u 615D449FE6E6A235 --detach-sign -a cryptomator-${{ env.BUILD_VERSION }}-x86_64.AppImage.zsync
       - name: Upload AppImage
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
-          name: cryptomator-${{ env.BUILD_VERSION }}-x86_64.AppImage
-          path: cryptomator-${{ env.BUILD_VERSION }}-x86_64.AppImage
-      - name: Upload AppImage.zsync
-        uses: actions/upload-artifact@v1
-        with:
-          name: cryptomator-${{ env.BUILD_VERSION }}-x86_64.AppImage.zsync
-          path: cryptomator-${{ env.BUILD_VERSION }}-x86_64.AppImage.zsync
+          name: appimage
+          path: |
+            cryptomator-${{ env.BUILD_VERSION }}-x86_64.AppImage
+            cryptomator-${{ env.BUILD_VERSION }}-x86_64.AppImage.asc
+            cryptomator-${{ env.BUILD_VERSION }}-x86_64.AppImage.zsync
+            cryptomator-${{ env.BUILD_VERSION }}-x86_64.AppImage.zsync.asc
+          if-no-files-found: error
           
   publish-github:
     name: Publish on Github 
@@ -118,18 +123,13 @@ jobs:
         id: getversion
         run: echo "APPIMG_VERSION=${{ needs.build-appimage.outputs.appimage-version }}" >> $GITHUB_ENV
       - name: Download AppImage
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
-          name: cryptomator-${{ env.APPIMG_VERSION }}-x86_64.AppImage
+          name: appimage
           path: .
-      - name: Download AppImage.zsync
-        uses: actions/download-artifact@v1
-        with:
-          name: cryptomator-${{ env.APPIMG_VERSION }}-x86_64.AppImage.zsync
-          path: .
-      - name: Create release on Github
-        id: create_release
-        uses: actions/create-release@v1
+      - name: Upload appimage to GitHub releases
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.CRYPTOBOT_RELEASE_TOKEN }} # release as "cryptobot"
         with:
@@ -139,21 +139,8 @@ jobs:
             :construction: Work in Progress
           draft: true
           prerelease: false
-      - name: Upload appimage to GitHub releases
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: cryptomator-${{ env.APPIMG_VERSION }}-x86_64.AppImage
-          asset_name: cryptomator-${{ env.APPIMG_VERSION }}-x86_64.AppImage
-          asset_content_type: application/vnd.appimage
-      - name: Upload zsync file to GitHub releases
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: cryptomator-${{ env.APPIMG_VERSION }}-x86_64.AppImage.zsync
-          asset_name: cryptomator-${{ env.APPIMG_VERSION }}-x86_64.AppImage.zsync
-          asset_content_type: application/x-zsync
+          files: |
+            cryptomator-*-x86_64.AppImage
+            cryptomator-*-x86_64.AppImage.asc
+            cryptomator-*-x86_64.AppImage.zsync
+            cryptomator-*-x86_64.AppImage.zsync.asc
