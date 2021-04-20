@@ -121,7 +121,9 @@ jobs:
     steps:
       - name: Get version
         id: getversion
-        run: echo "APPIMG_VERSION=${{ needs.build-appimage.outputs.appimage-version }}" >> $GITHUB_ENV
+        run: |
+          echo "APPIMG_VERSION=${{ needs.build-appimage.outputs.appimage-version }}" >> $GITHUB_ENV
+          echo "TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
       - name: Download AppImage
         uses: actions/download-artifact@v2
         with:
@@ -133,8 +135,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.CRYPTOBOT_RELEASE_TOKEN }} # release as "cryptobot"
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          tag_name: ${{ env.TAG }}
+          release_name: ${{ env.APPIMG_VERSION }}
           body: |
             :construction: Work in Progress
           draft: true
